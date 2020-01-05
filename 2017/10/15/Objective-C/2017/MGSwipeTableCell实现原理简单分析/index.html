@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EricHuang's blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="先上链接地址 MGSwipeTableCell 感动的是至今作者还在维护这个项目，iOS 5出来的，虽然 iOS 8出了新的API，可以增加自定义右边滑出的菜单，但是他依然不支持左边出菜单以及 iOS7。（理由够强烈了吧） 这篇文章不讲使用方法，作者在 README 里面说的很详细。初读了代码，想看看是怎么个实现思路（好奇宝宝），发现这个库写的很好，很强大（虽然代码格式不怎么规范，虽然有一个地方在">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MGSwipeTableCell实现原理简单分析">
+<meta property="og:url" content="https://huangzhifei.github.io/2017/10/15/Objective-C/2017/MGSwipeTableCell实现原理简单分析/index.html">
+<meta property="og:site_name" content="EricHuang&#39;s blog">
+<meta property="og:description" content="先上链接地址 MGSwipeTableCell 感动的是至今作者还在维护这个项目，iOS 5出来的，虽然 iOS 8出了新的API，可以增加自定义右边滑出的菜单，但是他依然不支持左边出菜单以及 iOS7。（理由够强烈了吧） 这篇文章不讲使用方法，作者在 README 里面说的很详细。初读了代码，想看看是怎么个实现思路（好奇宝宝），发现这个库写的很好，很强大（虽然代码格式不怎么规范，虽然有一个地方在">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-05T02:55:03.363Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MGSwipeTableCell实现原理简单分析">
+<meta name="twitter:description" content="先上链接地址 MGSwipeTableCell 感动的是至今作者还在维护这个项目，iOS 5出来的，虽然 iOS 8出了新的API，可以增加自定义右边滑出的菜单，但是他依然不支持左边出菜单以及 iOS7。（理由够强烈了吧） 这篇文章不讲使用方法，作者在 README 里面说的很详细。初读了代码，想看看是怎么个实现思路（好奇宝宝），发现这个库写的很好，很强大（虽然代码格式不怎么规范，虽然有一个地方在">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://huangzhifei.github.io/2017/10/15/Objective-C/2017/MGSwipeTableCell实现原理简单分析/"/>
+
+
+
+
+
+  <title>MGSwipeTableCell实现原理简单分析 | EricHuang's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EricHuang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每一个不码代码的日子，都是对生命的辜负!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home // 首页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user // 关于"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags // 标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th // 分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive // 归档"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2017/10/15/Objective-C/2017/MGSwipeTableCell实现原理简单分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Huang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EricHuang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MGSwipeTableCell实现原理简单分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-15T11:37:42+08:00">
+                2017-10-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS技术/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/15/Objective-C/2017/MGSwipeTableCell实现原理简单分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/15/Objective-C/2017/MGSwipeTableCell实现原理简单分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>先上链接地址 <a href="https://github.com/MortimerGoro/MGSwipeTableCell" target="_blank" rel="noopener">MGSwipeTableCell</a></p>
+<p>感动的是至今作者还在维护这个项目，iOS 5出来的，虽然 iOS 8出了新的API，可以增加自定义右边滑出的菜单，但是他依然不支持左边出菜单以及 iOS7。（理由够强烈了吧）</p>
+<p>这篇文章不讲使用方法，作者在 README 里面说的很详细。初读了代码，想看看是怎么个实现思路（好奇宝宝），发现这个库写的很好，很强大（虽然代码格式不怎么规范，虽然有一个地方在方法名后面直接多打了分号，但是不影响，not care）</p>
+<p><strong>实现思路</strong></p>
+<h3 id="1、继承自-UITableViewCell"><a href="#1、继承自-UITableViewCell" class="headerlink" title="1、继承自 UITableViewCell"></a>1、继承自 UITableViewCell</h3><p>完美集成自 UITableViewCell，给其增加一些属性、代理方法、动画方式等等，方法用户自定义（比如支持多行滑动）</p>
+<h3 id="2、滑出菜单"><a href="#2、滑出菜单" class="headerlink" title="2、滑出菜单"></a>2、滑出菜单</h3><p>左右滑出菜单，都是使用继承自 UIButton，事件方便，图文并茂，不用担心图文太多布局</p>
+<h3 id="3、手势"><a href="#3、手势" class="headerlink" title="3、手势"></a>3、手势</h3><p>MGSwipeTableCell 内部滑动手势并没有使用 UISwipeGestureRecognizer，而是使用 UIPanGestureRecognizer.</p>
+<h3 id="4、结束菜单"><a href="#4、结束菜单" class="headerlink" title="4、结束菜单"></a>4、结束菜单</h3><p>当我们在单滑模式下滑出菜单后，点击内容视图（tableView）任何区域都会完美收起菜单，而不会被 UITableViewCell 上的子控件拦截事件，其实是他偷偷的盖了一层和 tableView 的 bounds 一样大小的背景透明视图，增加 tap 手势去收起菜单。</p>
+<p>但是问题来了：<br>菜单出现后，我们如果点击菜单上面的 button 是要有响应的，所以上面说到的蒙层 View，我们需要继承 UIView，然后复写 hit 去处理当前点击区域在哪。（具体看源码，还涉及到穿透）</p>
+<h3 id="5、滑出菜单原理"><a href="#5、滑出菜单原理" class="headerlink" title="5、滑出菜单原理"></a>5、滑出菜单原理</h3><p>滑出时，他做了下面几点动作</p>
+<h5 id="a、创建-cell-的截图"><a href="#a、创建-cell-的截图" class="headerlink" title="a、创建 cell 的截图"></a>a、创建 cell 的截图</h5><p>这里有个小优化，截图里面并不包含分割线（分割线根着滑很奇怪），怎么才能完美截出不带分割线的图了，我们可以使用 cell 的宽，但是使用 cell.contentView.height。</p>
+<h5 id="b、隐藏-cell-上面-contentView-下的所有子-view"><a href="#b、隐藏-cell-上面-contentView-下的所有子-view" class="headerlink" title="b、隐藏 cell 上面 contentView 下的所有子 view"></a>b、隐藏 cell 上面 contentView 下的所有子 view</h5><h5 id="c、添加刚才的截图"><a href="#c、添加刚才的截图" class="headerlink" title="c、添加刚才的截图"></a>c、添加刚才的截图</h5><h5 id="d、动画"><a href="#d、动画" class="headerlink" title="d、动画"></a>d、动画</h5><p>这里的动画，假设我们只取最简单的从左到右，从右到左，作者使用了 CADisplayLink 去算移动的偏移量，然后使用 CGAffineTransformMakeTranslation(tx, ty) 去做移动动画，<strong>这里是不是也给了大家思路去实现自己的动画</strong>，基本上自定义动画都是需要使用 CADisplayLink 在配置系统提供的 C 的仿射变化接口去实现。</p>
+<h3 id="6、收起菜单后，显示-contentView-下的所有子-view"><a href="#6、收起菜单后，显示-contentView-下的所有子-view" class="headerlink" title="6、收起菜单后，显示 contentView 下的所有子 view"></a>6、收起菜单后，显示 contentView 下的所有子 view</h3><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>源码里面有很多细节，很值得仔细分析与学习。</p>
+<h3 id="自己如何简单实现"><a href="#自己如何简单实现" class="headerlink" title="自己如何简单实现"></a>自己如何简单实现</h3><p><a href="http://www.aizhuanji.com/a/7w2dJdJW.html" target="_blank" rel="noopener">看后面部分内容</a></p>
+<p>一句话总结就是在你的 view 下面放一个含有左右要出现的菜单，然后上面放你实际的内容盖住，增加手势，左右滑动调整约束来展示。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/18/Objective-C/2017/iOS之手势的传递/" rel="next" title="iOS之手势的传递">
+                <i class="fa fa-chevron-left"></i> iOS之手势的传递
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/19/Objective-C/2017/iOS之启动图的名字/" rel="prev" title="iOS之启动图的名字">
+                iOS之启动图的名字 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png"
+                alt="Eric Huang" />
+            
+              <p class="site-author-name" itemprop="name">Eric Huang</p>
+              <p class="site-description motion-element" itemprop="description">~ 生活不止苟且，还有诗和远方，迎着朝阳前进，看风与雪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/huangzhifei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/chongzizizizizizi/home?leftnav=1" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、继承自-UITableViewCell"><span class="nav-number">1.</span> <span class="nav-text">1、继承自 UITableViewCell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、滑出菜单"><span class="nav-number">2.</span> <span class="nav-text">2、滑出菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、手势"><span class="nav-number">3.</span> <span class="nav-text">3、手势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、结束菜单"><span class="nav-number">4.</span> <span class="nav-text">4、结束菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、滑出菜单原理"><span class="nav-number">5.</span> <span class="nav-text">5、滑出菜单原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a、创建-cell-的截图"><span class="nav-number">5.0.1.</span> <span class="nav-text">a、创建 cell 的截图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b、隐藏-cell-上面-contentView-下的所有子-view"><span class="nav-number">5.0.2.</span> <span class="nav-text">b、隐藏 cell 上面 contentView 下的所有子 view</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c、添加刚才的截图"><span class="nav-number">5.0.3.</span> <span class="nav-text">c、添加刚才的截图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#d、动画"><span class="nav-number">5.0.4.</span> <span class="nav-text">d、动画</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、收起菜单后，显示-contentView-下的所有子-view"><span class="nav-number">6.</span> <span class="nav-text">6、收起菜单后，显示 contentView 下的所有子 view</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自己如何简单实现"><span class="nav-number">8.</span> <span class="nav-text">自己如何简单实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric Huang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://huangzhifei.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://huangzhifei.github.io/2017/10/15/Objective-C/2017/MGSwipeTableCell实现原理简单分析/';
+          this.page.identifier = '2017/10/15/Objective-C/2017/MGSwipeTableCell实现原理简单分析/';
+          this.page.title = 'MGSwipeTableCell实现原理简单分析';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://huangzhifei.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

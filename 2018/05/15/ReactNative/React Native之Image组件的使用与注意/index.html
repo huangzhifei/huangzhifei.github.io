@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="RN," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EricHuang's blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Image 是一个用来显示网络或本地图片资源的组件。 方法有几个常用方法 onLayout当元素挂载或布局改变的时候，会触发此回调函数。 onError当加载出错后会触发此回调函数。 onLoad当加载成功后会触发此回调函数。 onLoadEnd不管是加载成功或失败都会触发此回调函数。 onLoadStart当开始加载的时候会触发此回调函数。 属性resizeMode此属性是当前图片尺寸与组件不成">
+<meta name="keywords" content="RN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native之Image组件的使用与注意">
+<meta property="og:url" content="https://huangzhifei.github.io/2018/05/15/ReactNative/React Native之Image组件的使用与注意/index.html">
+<meta property="og:site_name" content="EricHuang&#39;s blog">
+<meta property="og:description" content="Image 是一个用来显示网络或本地图片资源的组件。 方法有几个常用方法 onLayout当元素挂载或布局改变的时候，会触发此回调函数。 onError当加载出错后会触发此回调函数。 onLoad当加载成功后会触发此回调函数。 onLoadEnd不管是加载成功或失败都会触发此回调函数。 onLoadStart当开始加载的时候会触发此回调函数。 属性resizeMode此属性是当前图片尺寸与组件不成">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-05T02:55:03.372Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native之Image组件的使用与注意">
+<meta name="twitter:description" content="Image 是一个用来显示网络或本地图片资源的组件。 方法有几个常用方法 onLayout当元素挂载或布局改变的时候，会触发此回调函数。 onError当加载出错后会触发此回调函数。 onLoad当加载成功后会触发此回调函数。 onLoadEnd不管是加载成功或失败都会触发此回调函数。 onLoadStart当开始加载的时候会触发此回调函数。 属性resizeMode此属性是当前图片尺寸与组件不成">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://huangzhifei.github.io/2018/05/15/ReactNative/React Native之Image组件的使用与注意/"/>
+
+
+
+
+
+  <title>React Native之Image组件的使用与注意 | EricHuang's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EricHuang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每一个不码代码的日子，都是对生命的辜负!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home // 首页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user // 关于"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags // 标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th // 分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive // 归档"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2018/05/15/ReactNative/React Native之Image组件的使用与注意/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Huang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EricHuang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React Native之Image组件的使用与注意</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T09:55:33+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/15/ReactNative/React Native之Image组件的使用与注意/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/15/ReactNative/React Native之Image组件的使用与注意/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Image 是一个用来显示网络或本地图片资源的组件。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>有几个常用方法</p>
+<h3 id="onLayout"><a href="#onLayout" class="headerlink" title="onLayout"></a>onLayout</h3><p>当元素挂载或布局改变的时候，会触发此回调函数。</p>
+<h3 id="onError"><a href="#onError" class="headerlink" title="onError"></a>onError</h3><p>当加载出错后会触发此回调函数。</p>
+<h3 id="onLoad"><a href="#onLoad" class="headerlink" title="onLoad"></a>onLoad</h3><p>当加载成功后会触发此回调函数。</p>
+<h3 id="onLoadEnd"><a href="#onLoadEnd" class="headerlink" title="onLoadEnd"></a>onLoadEnd</h3><p>不管是加载成功或失败都会触发此回调函数。</p>
+<h3 id="onLoadStart"><a href="#onLoadStart" class="headerlink" title="onLoadStart"></a>onLoadStart</h3><p>当开始加载的时候会触发此回调函数。</p>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><h3 id="resizeMode"><a href="#resizeMode" class="headerlink" title="resizeMode"></a>resizeMode</h3><p>此属性是当前图片尺寸与组件不成比例时候的调整策略，他有如下几个枚举值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;cover&quot; | &quot;contain&quot; | &quot;stretch&quot; | &quot;repeat&quot; | &quot;center&quot;;</span><br></pre></td></tr></table></figure>
+<p><strong>1、cover:</strong> 在保持图片宽高比的前提下宿放图片，直到宽度和高度都大于等于容器视图的尺寸（如果容器有padding的话，则会相应的减去），这样图片会完全覆盖甚至超出容器，容器中不会留下任何空白。</p>
+<p><strong>2、contain:</strong> 在保持图片宽高比的前提下宿放图片，直到宽度和高度都小于等于容器视图的尺寸（如果容器有padding的话，则会相应的减去），这样图片会完全被包裹在容器中，容器中可能会留有空白。</p>
+<p><strong>3、stretch:</strong> 拉伸图片且不维持宽高比，直到宽高都刚好填满容器。</p>
+<p><strong>4、repeat:</strong> 重复平铺图片直到填满容器，图片会维持原始尺寸，但仅仅 iOS 能用。</p>
+<p><strong>5、center:</strong> 居中不拉伸。</p>
+<h3 id="source"><a href="#source" class="headerlink" title="source"></a>source</h3><p><strong>1、本地图片:</strong> 使用 require(‘相对路径’)来加载引用图片，不需要指定 width 和 height</p>
+<p><strong>2、网络图片:</strong> 使用 uri 来加载一个 http 地址的图片，看下面的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source = &#123;&#123;uri:item.imgUrl, width: 222, height: 95, cache:&apos;force-cache&apos;&#125;</span><br></pre></td></tr></table></figure>
+<p>必须要指定图片的 width 和 height，不然会不显示网络图片（因为图片 width 和 height 都为 0）</p>
+<p><strong>cache:</strong> 这个是用来控制缓存策略的:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">枚举</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>default</strong></td>
+<td style="text-align:left">使用原生平台默认策略</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>reload</strong></td>
+<td style="text-align:left">URL的数据将从原始地址加载。不使用现有的缓存数据</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>force-cache</strong></td>
+<td style="text-align:left">现有的缓存数据将用于满足请求，忽略其期限或到期日。如果缓存中没有对应请求的数据，则从原始地址加载</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>only-if-cached</strong></td>
+<td style="text-align:left">现有的缓存数据将用于满足请求，忽略其期限或到期日。如果缓存中没有对应请求的数据，则不尝试从原始地址加载，并且认为请求是失败的</td>
+</tr>
+</tbody>
+</table>
+<h3 id="style"><a href="#style" class="headerlink" title="style"></a>style</h3><p>样式属性里面有几个说明一下：</p>
+<p><strong>1、backgroundColor:</strong> 很多时间需要图片当背景，上面有文字之类的，我们需要设置此值为 ‘transparent’ 来消除 Text 的自带背景（在Text的样式里面设置）</p>
+<p><strong>2、overflow:</strong> 枚举值有 ‘visible’ 和 ‘hidden’，设置为 ‘hidden’ 就会把超过父控件的部分截取掉。</p>
+<p><strong>3、width:</strong> 我们可以通过设置一个百分比 ‘100%’、’90%’……来控制其对父控件的宽度，（比较方便）。</p>
+<h2 id="图片铺满"><a href="#图片铺满" class="headerlink" title="图片铺满"></a>图片铺满</h2><p>对于图片我们需要设置宽度才能显示，如果这个宽度比较大，对于不同的机型如何适配（比如：小屏），可以通过如下方式调整，但是图片可能会变型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;Image source = &#123;require(&apos;../../Res/images/xxx.png&apos;)&#125; style = &#123;styles.bgImageStyle&#125; resizeMode = &quot;stretch&quot;&gt;</span><br><span class="line">    &lt;Text style = &#123;styles.titleStyle&#125;&gt;</span><br><span class="line">        &#123;this.props.title&#125;</span><br><span class="line">    &lt;/Text&gt;         </span><br><span class="line">&lt;/Image&gt;</span><br><span class="line"></span><br><span class="line">const styles = StyleSheet.create(&#123;</span><br><span class="line">    bgImageStyle: &#123;</span><br><span class="line">        marginTop: 12,</span><br><span class="line">        marginBottom: 18,</span><br><span class="line">        marginLeft: 0,</span><br><span class="line">        marginRight: 0,</span><br><span class="line">        width: &apos;100%&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>通过设置 width 为 100%，在设置 resizeMode = ‘stretch’ 就可以做到不同尺寸屏幕的适配。</p>
+<h2 id="网络图占位"><a href="#网络图占位" class="headerlink" title="网络图占位"></a>网络图占位</h2><p>我们先来了解一下 Image 组件渲染绘制图像时的原理，如果当前 Image 上已经有一张绘制好的图像，在重新加载另一张新图像时，如果新图像还没有完全加载绘制好，还是会先显示之前的图像。</p>
+<p>我们首先展示占位图，然后设置一个 state 值，当网络数据返回后更新些值或者网络图片加载完成，就会去刷新，这个时候在根据这个值来判断是否去加载url的图片（有人担心我们在 onLoadEnd 或 onError 里面改变state，会不会出现死循环？不会的，RN做了优化了）<br>看如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">export default class ImageLoad extends Component &#123;</span><br><span class="line"></span><br><span class="line">    constructor (props) &#123;</span><br><span class="line">        super (props);</span><br><span class="line">        this.state = &#123;</span><br><span class="line">            showDefault: true,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static defaultProps = &#123;</span><br><span class="line">        placeHolder: null,</span><br><span class="line">        source: null,</span><br><span class="line">        resizeMode: &quot;cover&quot;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    static PropTypes = &#123;</span><br><span class="line">        placeHolder: PropTypes.object,</span><br><span class="line">        source: PropTypes.string.isRequired,</span><br><span class="line">        resizeMode: PropTypes.string</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        var image = this.props.placeHolder;</span><br><span class="line">        if (!this.props.placeHolder) &#123;</span><br><span class="line">            image = this.props.source;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            image = this.state.showDefault ? this.props.placeHolder : this.props.source;</span><br><span class="line">        &#125;</span><br><span class="line">        return (</span><br><span class="line">            &lt;Image style = &#123; this.props.style &#125; </span><br><span class="line">                    source = &#123; image &#125;</span><br><span class="line">                    onLoadEnd = &#123; () =&gt; &#123;</span><br><span class="line">                        if (this.props.placeHolder) &#123;</span><br><span class="line">                            // setTimeout(() =&gt; &#123;</span><br><span class="line">                            //     this.setState(&#123;</span><br><span class="line">                            //         showDefault: false</span><br><span class="line">                            //     &#125;)</span><br><span class="line">                            // &#125;, 10);</span><br><span class="line">                            this.setState(&#123;</span><br><span class="line">                                showDefault: false</span><br><span class="line">                            &#125;)</span><br><span class="line">                        &#125; </span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                resizeMode = &#123; this.props.resizeMode &#125;&gt;</span><br><span class="line">            &lt;/Image&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;View style = &#123;styles.containerStyle&#125;&gt;</span><br><span class="line">    &lt;ImageLoad style = &#123;styles.imageStyle&#125;</span><br><span class="line">        placeHolder = &#123;require(&quot;../Res/images/empty-image.png&quot;)&#125;</span><br><span class="line">        source = &#123;&#123;uri: &apos;http://www.baidu.com/image5715b22a749adphpyPs8k7.png&apos;, width: 220, height: 100, cache:&apos;force-cache&apos; &#125;&#125;&gt;</span><br><span class="line">    &lt;/ImageLoad&gt;</span><br><span class="line">&lt;/View&gt;</span><br></pre></td></tr></table></figure>
+<p>目前此组件还比较简单，可以添加一个加载提示，在加个动画让占位图和网络图切换的流畅点。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RN/" rel="tag"># RN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/10/ReactNative/React Native之Text中文字如何居中/" rel="next" title="React Native之Text中文字如何居中">
+                <i class="fa fa-chevron-left"></i> React Native之Text中文字如何居中
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/17/ReactNative/React Native之UI组件继承/" rel="prev" title="React Native之UI组件继承">
+                React Native之UI组件继承 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png"
+                alt="Eric Huang" />
+            
+              <p class="site-author-name" itemprop="name">Eric Huang</p>
+              <p class="site-description motion-element" itemprop="description">~ 生活不止苟且，还有诗和远方，迎着朝阳前进，看风与雪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/huangzhifei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/chongzizizizizizi/home?leftnav=1" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">1.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#onLayout"><span class="nav-number">1.1.</span> <span class="nav-text">onLayout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onError"><span class="nav-number">1.2.</span> <span class="nav-text">onError</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onLoad"><span class="nav-number">1.3.</span> <span class="nav-text">onLoad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onLoadEnd"><span class="nav-number">1.4.</span> <span class="nav-text">onLoadEnd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onLoadStart"><span class="nav-number">1.5.</span> <span class="nav-text">onLoadStart</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性"><span class="nav-number">2.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#resizeMode"><span class="nav-number">2.1.</span> <span class="nav-text">resizeMode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#source"><span class="nav-number">2.2.</span> <span class="nav-text">source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#style"><span class="nav-number">2.3.</span> <span class="nav-text">style</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片铺满"><span class="nav-number">3.</span> <span class="nav-text">图片铺满</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络图占位"><span class="nav-number">4.</span> <span class="nav-text">网络图占位</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric Huang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://huangzhifei.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://huangzhifei.github.io/2018/05/15/ReactNative/React Native之Image组件的使用与注意/';
+          this.page.identifier = '2018/05/15/ReactNative/React Native之Image组件的使用与注意/';
+          this.page.title = 'React Native之Image组件的使用与注意';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://huangzhifei.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

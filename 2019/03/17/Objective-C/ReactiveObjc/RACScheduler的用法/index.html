@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="RAC," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EricHuang's blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="RACScheduler 是一个线性执行队列，ReactiveCocoa 中的信号可以在 RACScheduler 上执行任务、发送结果；它的实现并不复杂，由多个简单的方法和类组成整个 RACScheduler 模块，是整个 ReactiveCocoa 中非常易于理解的部分。 RACScheduler 简介RACScheduler 作为 ReactiveCocoa 中唯一的用于调度的模块，它包含很">
+<meta name="keywords" content="RAC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RACScheduler的用法">
+<meta property="og:url" content="https://huangzhifei.github.io/2019/03/17/Objective-C/ReactiveObjc/RACScheduler的用法/index.html">
+<meta property="og:site_name" content="EricHuang&#39;s blog">
+<meta property="og:description" content="RACScheduler 是一个线性执行队列，ReactiveCocoa 中的信号可以在 RACScheduler 上执行任务、发送结果；它的实现并不复杂，由多个简单的方法和类组成整个 RACScheduler 模块，是整个 ReactiveCocoa 中非常易于理解的部分。 RACScheduler 简介RACScheduler 作为 ReactiveCocoa 中唯一的用于调度的模块，它包含很">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACScheduler-Subclasses.png">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACScheduler-Initializers.png">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACScheduler-Schedule.png">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACTargetQueueScheduler.png">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACScheduler-Priority.png">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACSubscriptionScheduler.png">
+<meta property="og:updated_time" content="2020-01-05T02:55:03.370Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RACScheduler的用法">
+<meta name="twitter:description" content="RACScheduler 是一个线性执行队列，ReactiveCocoa 中的信号可以在 RACScheduler 上执行任务、发送结果；它的实现并不复杂，由多个简单的方法和类组成整个 RACScheduler 模块，是整个 ReactiveCocoa 中非常易于理解的部分。 RACScheduler 简介RACScheduler 作为 ReactiveCocoa 中唯一的用于调度的模块，它包含很">
+<meta name="twitter:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACScheduler-Subclasses.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://huangzhifei.github.io/2019/03/17/Objective-C/ReactiveObjc/RACScheduler的用法/"/>
+
+
+
+
+
+  <title>RACScheduler的用法 | EricHuang's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EricHuang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每一个不码代码的日子，都是对生命的辜负!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home // 首页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user // 关于"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags // 标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th // 分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive // 归档"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2019/03/17/Objective-C/ReactiveObjc/RACScheduler的用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Huang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EricHuang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RACScheduler的用法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-17T23:28:48+08:00">
+                2019-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RAC/" itemprop="url" rel="index">
+                    <span itemprop="name">RAC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/17/Objective-C/ReactiveObjc/RACScheduler的用法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/03/17/Objective-C/ReactiveObjc/RACScheduler的用法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>RACScheduler</code> 是一个线性执行队列，<code>ReactiveCocoa</code> 中的信号可以在 <code>RACScheduler</code> 上执行任务、发送结果；它的实现并不复杂，由多个简单的方法和类组成整个 <code>RACScheduler</code> 模块，是整个 <code>ReactiveCocoa</code> 中非常易于理解的部分。</p>
+<h2 id="RACScheduler-简介"><a href="#RACScheduler-简介" class="headerlink" title="RACScheduler 简介"></a>RACScheduler 简介</h2><p><code>RACScheduler</code> 作为 <code>ReactiveCocoa</code> 中唯一的用于调度的模块，它包含很多个性化的子类：</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACScheduler-Subclasses.png" alt=""></p>
+<p><code>RACScheduler</code> 类的内部只有一个用于追踪标记和 <code>debug</code> 的属性 <code>name</code>，头文件和实现文件中的其它内容都是各种各样的方法；我们可以把其中的方法分为两类：</p>
+<p>一类是用于初始化 <code>RACScheduler</code> 实例的初始化方法：</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACScheduler-Initializers.png" alt=""></p>
+<p>另一类就是用于调度、执行任务的 +schedule: 等方法：</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACScheduler-Schedule.png" alt=""></p>
+<p>在图中省略了一些参数，以及一些调用其他方法的调度方法或者初始化方法。</p>
+<p>在 <code>RACScheduler</code> 中，大部分的调度方法都是需要子类覆写，它本身只提供少数的功能，比如递归 <code>block</code> 的执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (RACDisposable *)scheduleRecursiveBlock:(RACSchedulerRecursiveBlock)recursiveBlock &#123;</span><br><span class="line">	RACCompoundDisposable *disposable = [RACCompoundDisposable compoundDisposable];</span><br><span class="line">	[self scheduleRecursiveBlock:[recursiveBlock copy] addingToDisposable:disposable];</span><br><span class="line">	return disposable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该方法会递归的执行传入的 <code>recursiveBlock</code>，使用的方式非常简单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[scheduler scheduleRecursiveBlock:^(void (^reschedule)(void)) &#123;</span><br><span class="line">    if (needTerminated) return;</span><br><span class="line">    </span><br><span class="line">    // do something</span><br><span class="line"></span><br><span class="line">    reschedule();</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>如果需要递归就执行方法中的 <code>reschedule()</code>，就会再次执行当前的 <code>block</code>；<code>-scheduleRecursiveBlock:</code> 中调用的 <code>-scheduleRecursiveBlock:addingToDisposable:</code> 实现比较复杂：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (void)scheduleRecursiveBlock:(RACSchedulerRecursiveBlock)recursiveBlock addingToDisposable:(RACCompoundDisposable *)disposable &#123;</span><br><span class="line">    ...</span><br><span class="line">    RACDisposable *schedulingDisposable = [self schedule:^&#123;</span><br><span class="line">        void (^reallyReschedule)(void) = ^&#123;</span><br><span class="line">            [self scheduleRecursiveBlock:recursiveBlock addingToDisposable:disposable];</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        recursiveBlock(^&#123;</span><br><span class="line">            reallyReschedule();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;];</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>方法使用了 NSLock 保证在并发情况下并不会出现任何问题，不过在这里展示的代码中，我们将它省略了，一并省略的还有 RACDisposable 相关的代码，以保证整个方法逻辑的清晰。</code></p>
+<p>在每次执行 <code>recursiveBlock</code> 时，都会传入一个 <code>reallyReschedule</code> 用于递归执行传入的 <code>block</code>。</p>
+<p>其他的方法包括 <code>+schedule:</code>、<code>+after:schedule:</code> 以及 <code>after:repeatingEvery:withLeeway:schedule:</code> 方法都需要子类覆写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (RACDisposable *)schedule:(void (^)(void))block;</span><br><span class="line">- (RACDisposable *)after:(NSDate *)date schedule:(void (^)(void))block;</span><br><span class="line">- (RACDisposable *)after:(NSDate *)date repeatingEvery:(NSTimeInterval)interval withLeeway:(NSTimeInterval)leeway schedule:(void (^)(void))block &#123;</span><br><span class="line">	NSCAssert(NO, @&quot;%@ must be implemented by subclasses.&quot;, NSStringFromSelector(_cmd));</span><br><span class="line">	return nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而接下来我们就按照初始化方法的顺序依次介绍 RACScheduler 的子类了。</p>
+<h3 id="RACImmediateScheduler"><a href="#RACImmediateScheduler" class="headerlink" title="RACImmediateScheduler"></a>RACImmediateScheduler</h3><p><code>RACImmediateScheduler</code> 是一个会立即执行传入的代码块的调度器，我们可以使用 <code>RACScheduler</code> 的类方法 <code>+immediateScheduler</code> 返回一个它的实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (RACScheduler *)immediateScheduler &#123;</span><br><span class="line">	static dispatch_once_t onceToken;</span><br><span class="line">	static RACScheduler *immediateScheduler;</span><br><span class="line">	dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">		immediateScheduler = [[RACImmediateScheduler alloc] init];</span><br><span class="line">	&#125;);</span><br><span class="line">	return immediateScheduler;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于 <code>RACImmediateScheduler</code> 是一个私有类，全局只能通过该方法返回它的实例，所以整个程序的运行周期内，我们通过『合法』手段只能获得唯一一个单例。</p>
+<p>作为 <code>RACScheduler</code> 的子类，它必须对父类的调度方法进行覆写，不过因为本身的职能原因，<code>RACImmediateScheduler</code> 对于父类的覆写还是非常简单的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (RACDisposable *)schedule:(void (^)(void))block &#123;</span><br><span class="line">	block();</span><br><span class="line">	return nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (RACDisposable *)after:(NSDate *)date schedule:(void (^)(void))block &#123;</span><br><span class="line">	[NSThread sleepUntilDate:date];</span><br><span class="line">	block();</span><br><span class="line">	return nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (RACDisposable *)after:(NSDate *)date repeatingEvery:(NSTimeInterval)interval withLeeway:(NSTimeInterval)leeway schedule:(void (^)(void))block &#123;</span><br><span class="line">	NSCAssert(NO, @&quot;+[RACScheduler immediateScheduler] does not support %@.&quot;, NSStringFromSelector(_cmd));</span><br><span class="line">	return nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>+schedule</code> 方法会立刻执行传入的 <code>block</code>；</li>
+<li><code>+after:schedule:</code> 方法会将当前线程休眠到指定时间后执行 <code>block</code>；</li>
+<li>而对于 <code>+after:repeatingEvery:withLeeway:schedule:</code> 方法就干脆不支持。</li>
+</ol>
+<p>这确实非常符合 <code>RACImmediateScheduler</code> 类的名字以及功能，虽然没有要求对递归执行 <code>block</code> 的方法进行覆写，不过它依然做了这件事情：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (RACDisposable *)scheduleRecursiveBlock:(RACSchedulerRecursiveBlock)recursiveBlock &#123;</span><br><span class="line">	for (__block NSUInteger remaining = 1; remaining &gt; 0; remaining--) &#123;</span><br><span class="line">		recursiveBlock(^&#123;</span><br><span class="line">			remaining++;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">	return nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现的过程非常简洁，甚至没有什么值得解释的地方了。</p>
+<h3 id="RACTargetQueueScheduler"><a href="#RACTargetQueueScheduler" class="headerlink" title="RACTargetQueueScheduler"></a>RACTargetQueueScheduler</h3><p><code>RACTargetQueueScheduler</code> 继承自 <code>RACQueueScheduler</code>，但是由于后者是抽象类，我们并不会直接使用它，它只是为前者提供必要的方法支持，将一部分逻辑抽离出来：</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACTargetQueueScheduler.png" alt=""></p>
+<p>这里我们先简单看一下 <code>RACTargetQueueScheduler</code> 的实现，整个 <code>RACTargetQueueScheduler</code> 类中只有一个初始化方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (instancetype)initWithName:(NSString *)name targetQueue:(dispatch_queue_t)targetQueue &#123;</span><br><span class="line">	dispatch_queue_t queue = dispatch_queue_create(name.UTF8String, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">	dispatch_set_target_queue(queue, targetQueue);</span><br><span class="line">	return [super initWithName:name queue:queue];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>初始化方法 <code>-initWithName:targetQueue:</code> 使用 <code>dispatch_queue_create</code> 创建了一个串行队列，然后通过 <code>dispatch_set_target_queue</code> 根据传入的 <code>targetQueue</code> 设置队列的优先级，最后调用父类的指定构造器完成整个初始化过程。</p>
+<p><code>RACTargetQueueScheduler</code> 在使用时，将待执行的任务加入一个私有的串行队列中，其优先级与传入的 <code>targetQueue</code> 完全相同；不过提到 <code>RACTargetQueueScheduler</code> 中队列的优先级，对 <code>GCD</code> 稍有了解的人应该都知道在 <code>GCD</code> 中有着四种不同优先级的全局并行队列，而在 <code>RACScheduler</code> 中也有一一对应的枚举类型：</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACScheduler-Priority.png" alt=""></p>
+<p>在使用 <code>+schedulerWithPriority:</code> 方法创建 <code>RACTargetQueueScheduler</code> 时，就需要传入上面的优先级，方法会通过 <code>GCD</code> 的内置方法 <code>dispatch_get_global_queue</code> 获取全局的并行队列，最终返回一个新的实例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (RACScheduler *)schedulerWithPriority:(RACSchedulerPriority)priority name:(NSString *)name &#123;</span><br><span class="line">	return [[RACTargetQueueScheduler alloc] initWithName:name targetQueue:dispatch_get_global_queue(priority, 0)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>RACScheduler</code> 接口中另一个获得主线程调度器的方法 <code>+mainThreadScheduler</code>，其实现也是返回一个 <code>RACTargetQueueScheduler</code>对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (RACScheduler *)mainThreadScheduler &#123;</span><br><span class="line">	static dispatch_once_t onceToken;</span><br><span class="line">	static RACScheduler *mainThreadScheduler;</span><br><span class="line">	dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">		mainThreadScheduler = [[RACTargetQueueScheduler alloc] initWithName:@&quot;org.reactivecocoa.ReactiveObjC.RACScheduler.mainThreadScheduler&quot; targetQueue:dispatch_get_main_queue()];</span><br><span class="line">	&#125;);</span><br><span class="line">	</span><br><span class="line">	return mainThreadScheduler;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>与前者不同的是，后者通过单例模式每次调用时返回一个相同的主线程队列。</p>
+<h3 id="抽象类-RACQueueScheduler"><a href="#抽象类-RACQueueScheduler" class="headerlink" title="抽象类 RACQueueScheduler"></a>抽象类 RACQueueScheduler</h3><p>在我们对 <code>RACTargetQueueScheduler</code> 有一定了解之后，再看它的抽象类就非常简单了；<code>RACImmediateScheduler</code> 会立即执行传入的任务，而 <code>RACQueueScheduler</code> 其实就是对 <code>GCD</code> 的封装，相信各位读者从它的子类的实现就可以看出来。</p>
+<p><code>RACQueueScheduler</code> 对三个需要覆写的方法都进行了重写，其实现完全基于 <code>GCD</code>，以 <code>-schedule:</code> 方法为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (RACDisposable *)schedule:(void (^)(void))block &#123;</span><br><span class="line">	RACDisposable *disposable = [[RACDisposable alloc] init];</span><br><span class="line"></span><br><span class="line">	dispatch_async(self.queue, ^&#123;</span><br><span class="line">		if (disposable.disposed) return;</span><br><span class="line">		[self performAsCurrentScheduler:block];</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	return disposable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>dispatch_async</code> 方法直接将需要执行的任务异步派发到它所持有的队列上；而 <code>-after:schedule:</code> 方法的实现相信各位读者也能猜到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (RACDisposable *)after:(NSDate *)date schedule:(void (^)(void))block &#123;</span><br><span class="line">	RACDisposable *disposable = [[RACDisposable alloc] init];</span><br><span class="line"></span><br><span class="line">	dispatch_after([self.class wallTimeWithDate:date], self.queue, ^&#123;</span><br><span class="line">		if (disposable.disposed) return;</span><br><span class="line">		[self performAsCurrentScheduler:block];</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	return disposable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>哪怕不使用 <code>RACScheduler</code>，我们也能够想到利用 <code>dispatch_after</code> 完成一些需要延迟执行的任务，最后的 <code>+after:repeatingEvery:withLeeway:schedule:</code> 方法的实现就稍微复杂一些了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (RACDisposable *)after:(NSDate *)date repeatingEvery:(NSTimeInterval)interval withLeeway:(NSTimeInterval)leeway schedule:(void (^)(void))block &#123;</span><br><span class="line">	uint64_t intervalInNanoSecs = (uint64_t)(interval * NSEC_PER_SEC);</span><br><span class="line">	uint64_t leewayInNanoSecs = (uint64_t)(leeway * NSEC_PER_SEC);</span><br><span class="line"></span><br><span class="line">	dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.queue);</span><br><span class="line">	dispatch_source_set_timer(timer, [self.class wallTimeWithDate:date], intervalInNanoSecs, leewayInNanoSecs);</span><br><span class="line">	dispatch_source_set_event_handler(timer, block);</span><br><span class="line">	dispatch_resume(timer);</span><br><span class="line"></span><br><span class="line">	return [RACDisposable disposableWithBlock:^&#123;</span><br><span class="line">		dispatch_source_cancel(timer);</span><br><span class="line">	&#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法使用 <code>dispatch_source_t</code> 以及定时器，完成了每隔一段时间需要执行任务的需求。</p>
+<h3 id="RACSubscriptionScheduler"><a href="#RACSubscriptionScheduler" class="headerlink" title="RACSubscriptionScheduler"></a>RACSubscriptionScheduler</h3><p>最后的 <code>RACSubscriptionScheduler</code> 是 <code>ReactiveCocoa</code> 中一个比较特殊的调度器，所有 <code>ReactiveCocoa</code> 中的订阅事件都会在 <code>RACSubscriptionScheduler</code> 调度器上进行；而它是通过封装两个调度器实现的：</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RACSubscriptionScheduler.png" alt=""></p>
+<p><code>backgroundScheduler 是一个优先级为 RACSchedulerPriorityDefault 的串行队列。</code></p>
+<p><code>RACSubscriptionScheduler</code> 本身不提供任何的调度功能，它会根据当前状态选择持有的两个调度器中的一个执行任务；首先判断当前线程是否存在 <code>currentScheduler</code>，如果不存在的话才会在 <code>backgroundScheduler</code> 执行任务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (RACDisposable *)schedule:(void (^)(void))block &#123;</span><br><span class="line">	if (RACScheduler.currentScheduler == nil) return [self.backgroundScheduler schedule:block];</span><br><span class="line">	block();</span><br><span class="line">	return nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (RACDisposable *)after:(NSDate *)date schedule:(void (^)(void))block &#123;</span><br><span class="line">	RACScheduler *scheduler = RACScheduler.currentScheduler ?: self.backgroundScheduler;</span><br><span class="line">	return [scheduler after:date schedule:block];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (RACDisposable *)after:(NSDate *)date repeatingEvery:(NSTimeInterval)interval withLeeway:(NSTimeInterval)leeway schedule:(void (^)(void))block &#123;</span><br><span class="line">	RACScheduler *scheduler = RACScheduler.currentScheduler ?: self.backgroundScheduler;</span><br><span class="line">	return [scheduler after:date repeatingEvery:interval withLeeway:leeway schedule:block];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>RACSubscriptionScheduler</code> 作为一个私有类，我们并不能直接在 <code>ReactiveCocoa</code> 外部使用它，需要通过私有方法 <code>+subscriptionScheduler</code> 获取这个调度器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (RACScheduler *)subscriptionScheduler &#123;</span><br><span class="line">	static dispatch_once_t onceToken;</span><br><span class="line">	static RACScheduler *subscriptionScheduler;</span><br><span class="line">	dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">		subscriptionScheduler = [[RACSubscriptionScheduler alloc] init];</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	return subscriptionScheduler;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><code>RACScheduler</code> 在某些方面与 <code>GCD</code> 中的队列十分相似，与 <code>GCD</code> 中的队列不同的有两点，第一，它可以通过 <code>RACDisposable</code> 对执行中的任务进行取消，第二是 <code>RACScheduler</code> 中任务的执行都是线性的；与此同时 <code>RACScheduler</code> 也与 <code>NSOperationQueue</code> 非常类似，但是它并不支持对调度的任务进行重排序以及实现任务与任务之间的依赖关系。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RAC/" rel="tag"># RAC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/11/Objective-C/2019/iOS navigationItem titleView 居中/" rel="next" title="iOS navigationItem titleView 居中">
+                <i class="fa fa-chevron-left"></i> iOS navigationItem titleView 居中
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/18/Objective-C/ReactiveObjc/RACCommand的用法/" rel="prev" title="RACCommand的用法">
+                RACCommand的用法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png"
+                alt="Eric Huang" />
+            
+              <p class="site-author-name" itemprop="name">Eric Huang</p>
+              <p class="site-description motion-element" itemprop="description">~ 生活不止苟且，还有诗和远方，迎着朝阳前进，看风与雪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/huangzhifei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/chongzizizizizizi/home?leftnav=1" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RACScheduler-简介"><span class="nav-number">1.</span> <span class="nav-text">RACScheduler 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RACImmediateScheduler"><span class="nav-number">1.1.</span> <span class="nav-text">RACImmediateScheduler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RACTargetQueueScheduler"><span class="nav-number">1.2.</span> <span class="nav-text">RACTargetQueueScheduler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象类-RACQueueScheduler"><span class="nav-number">1.3.</span> <span class="nav-text">抽象类 RACQueueScheduler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RACSubscriptionScheduler"><span class="nav-number">1.4.</span> <span class="nav-text">RACSubscriptionScheduler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric Huang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://huangzhifei.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://huangzhifei.github.io/2019/03/17/Objective-C/ReactiveObjc/RACScheduler的用法/';
+          this.page.identifier = '2019/03/17/Objective-C/ReactiveObjc/RACScheduler的用法/';
+          this.page.title = 'RACScheduler的用法';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://huangzhifei.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
