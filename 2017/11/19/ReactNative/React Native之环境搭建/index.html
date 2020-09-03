@@ -1,37 +1,863 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="RN,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EricHuang's blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="我们使用的环境为 Mac OSX，主要针对 OSX 系统来搭建！ 安装1、HomebrewHomebrew 为 Mac 系统下的包管理器，安装软件非常方便。 Homebrew 安装命令如下： 1&amp;#x2F;usr&amp;#x2F;bin&amp;#x2F;ruby -e &amp;quot;$(curl -fsSL https:&amp;#x2F;&amp;#x2F;raw.githubusercontent.com&amp;#x2F;Hom">
+<meta name="keywords" content="RN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native之环境搭建">
+<meta property="og:url" content="https://huangzhifei.github.io/2017/11/19/ReactNative/React Native之环境搭建/index.html">
+<meta property="og:site_name" content="EricHuang&#39;s blog">
+<meta property="og:description" content="我们使用的环境为 Mac OSX，主要针对 OSX 系统来搭建！ 安装1、HomebrewHomebrew 为 Mac 系统下的包管理器，安装软件非常方便。 Homebrew 安装命令如下： 1&amp;#x2F;usr&amp;#x2F;bin&amp;#x2F;ruby -e &amp;quot;$(curl -fsSL https:&amp;#x2F;&amp;#x2F;raw.githubusercontent.com&amp;#x2F;Hom">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/localhost.png">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RNTechDepend.png">
+<meta property="og:updated_time" content="2020-01-05T02:55:03.376Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native之环境搭建">
+<meta name="twitter:description" content="我们使用的环境为 Mac OSX，主要针对 OSX 系统来搭建！ 安装1、HomebrewHomebrew 为 Mac 系统下的包管理器，安装软件非常方便。 Homebrew 安装命令如下： 1&amp;#x2F;usr&amp;#x2F;bin&amp;#x2F;ruby -e &amp;quot;$(curl -fsSL https:&amp;#x2F;&amp;#x2F;raw.githubusercontent.com&amp;#x2F;Hom">
+<meta name="twitter:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/localhost.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://huangzhifei.github.io/2017/11/19/ReactNative/React Native之环境搭建/">
+
+
+
+
+
+  <title>React Native之环境搭建 | EricHuang's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EricHuang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每一个不码代码的日子，都是对生命的辜负!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home // 首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user // 关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags // 标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th // 分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive // 归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2017/11/19/ReactNative/React Native之环境搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EricHuang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React Native之环境搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-19T14:54:41+08:00">
+                2017-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/19/ReactNative/React Native之环境搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/11/19/ReactNative/React Native之环境搭建/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们使用的环境为 Mac OSX，主要针对 OSX 系统来搭建！</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="1、Homebrew"><a href="#1、Homebrew" class="headerlink" title="1、Homebrew"></a>1、Homebrew</h3><p>Homebrew 为 Mac 系统下的包管理器，安装软件非常方便。</p>
+<p><a href="https://brew.sh">Homebrew</a> 安装命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;usr&#x2F;bin&#x2F;ruby -e &quot;$(curl -fsSL https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;Homebrew&#x2F;install&#x2F;master&#x2F;install)&quot;</span><br></pre></td></tr></table></figure>
+<p>如果碰到 /usr/local 目录不可写的权限问题，可以使用下面的命令修复：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R &#96;whoami&#96; &#x2F;usr&#x2F;local</span><br></pre></td></tr></table></figure>
+<h3 id="2、Node"><a href="#2、Node" class="headerlink" title="2、Node"></a>2、Node</h3><p>React Native 目前需要 Node.js. 5.0及更高的版本，不过目前 homebrew 默认安装的版本都满足要求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
+<p>安装完 node 后建议设置 npm 的镜像以加速后面的过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org --global</span><br><span class="line">npm config set disturl https:&#x2F;&#x2F;npm.taobao.org&#x2F;dist --global</span><br></pre></td></tr></table></figure>
+<h3 id="3、Yarn、React-Native的命令行工具（react-native-cli）"><a href="#3、Yarn、React-Native的命令行工具（react-native-cli）" class="headerlink" title="3、Yarn、React Native的命令行工具（react-native-cli）"></a>3、Yarn、React Native的命令行工具（react-native-cli）</h3><p><a href="https://yarnpkg.com/zh-Hans/">Yarn</a> 是 Facebook 提供替代 npm 的工具，据说可以加速 node 模块的下载。</p>
+<p>react-native-cli 用于执行、创建、更新项目、运行打包服务等任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g yarn react-native-cli</span><br></pre></td></tr></table></figure>
+<p>安装完yarn后同理也要设置镜像源：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn config set registry https:&#x2F;&#x2F;registry.npm.taobao.org --global</span><br><span class="line">yarn config set disturl https:&#x2F;&#x2F;npm.taobao.org&#x2F;dist --global</span><br></pre></td></tr></table></figure>
+<h3 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h3><p>React Native 目前需要 Xcode 8.0 或更高版本，这个自行安装就行。</p>
+<p>其实主要是需要 Xcode 的命令行工具 Command Line Tools。</p>
+<h2 id="推荐安装"><a href="#推荐安装" class="headerlink" title="推荐安装"></a>推荐安装</h2><h3 id="1、Watchman"><a href="#1、Watchman" class="headerlink" title="1、Watchman"></a>1、Watchman</h3><p>watchman 是由 facebook 提供的监视文件系统变更的工具，安装此工具可以提高开发时的性能（packager 可以快速扑捉文件的变化从而实现实时刷新）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install watchman</span><br></pre></td></tr></table></figure>
+<h2 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h2><p>由于 RN 0.45 之后要安装第三方库 boostrap，所以我们先使用 0.44.3 来编写用例吧</p>
+<h3 id="1、创建纯-RN-工程"><a href="#1、创建纯-RN-工程" class="headerlink" title="1、创建纯 RN 工程"></a>1、创建纯 RN 工程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">react-native init MyApp --version 0.44.3</span><br></pre></td></tr></table></figure>
+<p>注意后面的版本号必须精确到两个小数点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd MyApp</span><br><span class="line">react-native run-ios</span><br></pre></td></tr></table></figure>
+<p>这样就直接启动程序了</p>
+<h3 id="2、oc-工程内嵌-RN"><a href="#2、oc-工程内嵌-RN" class="headerlink" title="2、oc 工程内嵌 RN"></a>2、oc 工程内嵌 RN</h3><p>1、正常创建 oc 工程，在 .xcworkspace 同级下创建文件夹，假设我们叫 RNComponent ，然后进入 RNComponent，我们先拷贝一个 package.json 文件进来（可以在其他目录创建一个纯RN工程后，拷贝其package.json文件），然后执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<p>在手动创建一个 index.ios.js 文件，作为 RN 的入口。</p>
+<p>2、创建一个 podfile 文件，里面以 subspec 的形式填写你所需要集成的 React Native 的组件，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">platform :ios, &#39;8.0&#39;</span><br><span class="line"></span><br><span class="line">target &#39;RNNative&#39; do</span><br><span class="line"></span><br><span class="line">#for react native</span><br><span class="line">#如果你的RN版本 &gt;&#x3D; 0.42.0，请加入下面这行</span><br><span class="line">	pod &#39;Yoga&#39;,  :path &#x3D;&gt; &#39;.&#x2F;RNComponent&#x2F;node_modules&#x2F;react-native&#x2F;ReactCommon&#x2F;yoga&#39;</span><br><span class="line">    pod &#39;React&#39;, :path &#x3D;&gt; &#39;.&#x2F;RNComponent&#x2F;node_modules&#x2F;react-native&#x2F;&#39;, :subspecs &#x3D;&gt; [</span><br><span class="line"> 	&#39;Core&#39;,</span><br><span class="line">  	&#39;ART&#39;,</span><br><span class="line">  	&#39;RCTActionSheet&#39;,</span><br><span class="line">  	&#39;RCTAdSupport&#39;,</span><br><span class="line">  	&#39;RCTGeolocation&#39;,</span><br><span class="line">  	&#39;RCTImage&#39;,</span><br><span class="line">  	&#39;RCTNetwork&#39;,</span><br><span class="line">  	&#39;RCTPushNotification&#39;,</span><br><span class="line">  	&#39;RCTSettings&#39;,</span><br><span class="line">  	&#39;RCTText&#39;,</span><br><span class="line">  	&#39;RCTVibration&#39;,</span><br><span class="line">  	&#39;RCTWebSocket&#39;,</span><br><span class="line">  	&#39;RCTLinkingIOS&#39;,</span><br><span class="line">    &#39;DevSupport&#39;]</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3 id="3、启动服务"><a href="#3、启动服务" class="headerlink" title="3、启动服务"></a>3、启动服务</h3><p>执行以下命令来启动 RN 本地的服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">react-native start</span><br></pre></td></tr></table></figure>
+<p>这样原生 iOS 程序就可以调用 js 文件了。</p>
+<p>注意：当 RN 的本地服务运行起来后，我们通过 XCode 来运行程序时可能会提示无法链接到 RN 的服务，这是因为我们本地服务是以 http 的方式启动的，由于 ATS 的限制让我们必须使用 https ，所以我们需要在 info.plist 里面增加 http 的允许或者我们增加 Exception Domains 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;NSAppTransportSecurity&lt;&#x2F;key&gt;</span><br><span class="line">	&lt;dict&gt;</span><br><span class="line">		&lt;key&gt;NSExceptionDomains&lt;&#x2F;key&gt;</span><br><span class="line">		&lt;dict&gt;</span><br><span class="line">			&lt;key&gt;localhost&lt;&#x2F;key&gt;</span><br><span class="line">			&lt;dict&gt;</span><br><span class="line">				&lt;key&gt;NSTemporaryExceptionAllowsInsecureHTTPLoads&lt;&#x2F;key&gt;</span><br><span class="line">				&lt;true&#x2F;&gt;</span><br><span class="line">			&lt;&#x2F;dict&gt;</span><br><span class="line">		&lt;&#x2F;dict&gt;</span><br><span class="line">	&lt;&#x2F;dict&gt;</span><br></pre></td></tr></table></figure>
+<p>如下图:<br><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/localhost.png" alt></p>
+<h3 id="4、服务更新与清理"><a href="#4、服务更新与清理" class="headerlink" title="4、服务更新与清理"></a>4、服务更新与清理</h3><p>React Native 更新非常快，我们应该时刻保持包管理的更新，之有使用 brew 来管理包，所以我们尽量让 brew 处于最新状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew update</span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure>
+<p>如果升级了 React Native，那么推荐升级一下 node</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew upgrade node</span><br></pre></td></tr></table></figure>
+<p>当依赖包出现部问题或混乱后，很多时间我们需要清理已经安装的 npm 包， 重新 install 就好了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rm node_modules</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<h3 id="5、原生添加-RN-入口绑定"><a href="#5、原生添加-RN-入口绑定" class="headerlink" title="5、原生添加 RN 入口绑定"></a>5、原生添加 RN 入口绑定</h3><p>我们可以app启动时候去添加如下代码来绑定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">    NSURL *jsCodeLocation;</span><br><span class="line">    </span><br><span class="line">#ifdef DEBUG</span><br><span class="line">    &#x2F;&#x2F;开发的时候用，需要打开本地服务器</span><br><span class="line">    &#x2F;&#x2F;真面调试的话，要让手机和电脑处于同一个路由下面，并且使用电脑端的ip地址</span><br><span class="line">    &#x2F;&#x2F;    jsCodeLocation &#x3D; [NSURL URLWithString:@&quot;http:&#x2F;&#x2F;10.1.17.92:8081&#x2F;index.ios.bundle?platform&#x3D;ios&amp;dev&#x3D;true&quot;];</span><br><span class="line">    &#x2F;&#x2F;localhost是使用模拟器调试的</span><br><span class="line">    jsCodeLocation &#x3D; [NSURL URLWithString:@&quot;http:&#x2F;&#x2F;localhost:8081&#x2F;index.ios.bundle?platform&#x3D;ios&amp;dev&#x3D;true&quot;];</span><br><span class="line">#else</span><br><span class="line">    &#x2F;&#x2F;发布APP的时候用</span><br><span class="line">    jsCodeLocation &#x3D; [[NSBundle mainBundle] URLForResource:@&quot;index.ios&quot; withExtension:@&quot;jsbundle&quot;];</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    RCTRootView *rootView &#x3D; [[RCTRootView alloc] initWithBundleURL:jsCodeLocation</span><br><span class="line">                                                        moduleName:@&quot;RNStyleTest&quot;</span><br><span class="line">                                                 initialProperties:nil &#x2F;&#x2F;将native数据传送到RN中</span><br><span class="line">                                                     launchOptions:nil];</span><br><span class="line"></span><br><span class="line">    rootView.frame &#x3D; CGRectInset([UIScreen mainScreen].bounds, 32, 70);</span><br><span class="line">    self.view.backgroundColor &#x3D; [UIColor greenColor];</span><br><span class="line">&#x2F;&#x2F;    [self.view addSubview:rootView];</span><br><span class="line">    self.view &#x3D; rootView;</span><br></pre></td></tr></table></figure>
+<p>剩下的就是去修改 index.ios.js 文件及对应要加载的 js 文件了。</p>
+<p>贴上一个 index.ios.js 里面的代码供参考：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import React, &#123;Component&#125; from &#39;react&#39;;</span><br><span class="line">import &#123;</span><br><span class="line">    AppRegistry</span><br><span class="line">&#125; from &#39;react-native&#39;;</span><br><span class="line"></span><br><span class="line">import styleTest from &#39;.&#x2F;styleTest&#39;;</span><br><span class="line">import flexTest from &#39;.&#x2F;flexBoxTest&#39;;</span><br><span class="line">import positionTest from &#39;.&#x2F;positionTest&#39;;</span><br><span class="line">import layoutTest from &#39;.&#x2F;layoutTest&#39;;</span><br><span class="line">import videoTest from &#39;.&#x2F;video&#x2F;index&#39;;</span><br><span class="line">import photoTest from &#39;.&#x2F;photoTest&#39;;</span><br><span class="line"></span><br><span class="line">AppRegistry.registerComponent(&#39;RNStyleTest&#39;, () &#x3D;&gt; styleTest);</span><br><span class="line">AppRegistry.registerComponent(&#39;RNFlexTest&#39;, () &#x3D;&gt; flexTest);</span><br><span class="line">AppRegistry.registerComponent(&#39;RNPositionTest&#39;, () &#x3D;&gt; positionTest);</span><br><span class="line">AppRegistry.registerComponent(&#39;RNLayoutTest&#39;, () &#x3D;&gt; layoutTest);</span><br><span class="line">AppRegistry.registerComponent(&#39;RNVideoTest&#39;, () &#x3D;&gt; videoTest);</span><br><span class="line">AppRegistry.registerComponent(&#39;RNPhotoTest&#39;, () &#x3D;&gt; photoTest);</span><br></pre></td></tr></table></figure>
+<p>这里我们注册了 6 个组件。</p>
+<h2 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h2><p>推荐：</p>
+<p>webstorm</p>
+<p>atom</p>
+<p>sublime text</p>
+<p>visual studio code</p>
+<p>喜欢用哪个就用哪个，我反正都安装了，最后用了 visual studio code（VSCode）也没有用明白~</p>
+<h2 id="RN-技术依赖"><a href="#RN-技术依赖" class="headerlink" title="RN 技术依赖"></a>RN 技术依赖</h2><p>个人总结：</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RNTechDepend.png" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RN/" rel="tag"># RN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/19/Objective-C/2017/iOS之启动图的名字/" rel="next" title="iOS之启动图的名字">
+                <i class="fa fa-chevron-left"></i> iOS之启动图的名字
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/15/Objective-C/2017/iOS之title的故事/" rel="prev" title="iOS之title的故事">
+                iOS之title的故事 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png" alt="Eric Huang">
+            
+              <p class="site-author-name" itemprop="name">Eric Huang</p>
+              <p class="site-description motion-element" itemprop="description">~ 生活不止苟且，还有诗和远方，迎着朝阳前进，看风与雪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/huangzhifei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/chongzizizizizizi/home?leftnav=1" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Homebrew"><span class="nav-number">1.1.</span> <span class="nav-text">1、Homebrew</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Node"><span class="nav-number">1.2.</span> <span class="nav-text">2、Node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Yarn、React-Native的命令行工具（react-native-cli）"><span class="nav-number">1.3.</span> <span class="nav-text">3、Yarn、React Native的命令行工具（react-native-cli）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode"><span class="nav-number">1.4.</span> <span class="nav-text">Xcode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐安装"><span class="nav-number">2.</span> <span class="nav-text">推荐安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Watchman"><span class="nav-number">2.1.</span> <span class="nav-text">1、Watchman</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建工程"><span class="nav-number">3.</span> <span class="nav-text">创建工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建纯-RN-工程"><span class="nav-number">3.1.</span> <span class="nav-text">1、创建纯 RN 工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、oc-工程内嵌-RN"><span class="nav-number">3.2.</span> <span class="nav-text">2、oc 工程内嵌 RN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、启动服务"><span class="nav-number">3.3.</span> <span class="nav-text">3、启动服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、服务更新与清理"><span class="nav-number">3.4.</span> <span class="nav-text">4、服务更新与清理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、原生添加-RN-入口绑定"><span class="nav-number">3.5.</span> <span class="nav-text">5、原生添加 RN 入口绑定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDE"><span class="nav-number">4.</span> <span class="nav-text">IDE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RN-技术依赖"><span class="nav-number">5.</span> <span class="nav-text">RN 技术依赖</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric Huang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://huangzhifei.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://huangzhifei.github.io/2017/11/19/ReactNative/React Native之环境搭建/';
+          this.page.identifier = '2017/11/19/ReactNative/React Native之环境搭建/';
+          this.page.title = 'React Native之环境搭建';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://huangzhifei.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

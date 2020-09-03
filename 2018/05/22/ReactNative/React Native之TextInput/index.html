@@ -1,37 +1,845 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="RN,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EricHuang's blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="概述TextInput组件和Text组件类似，内部都没有使用FlexBox布局，不同的是TextInput组件支持文字的输入，因为支持文字输入，TextInput组件要比Text组件多了一些属性和方法。TextInput组件支持Text组件所有的Style属性，而TextInput组件本身是没有特有的Style属性的。 属性TextInput组件支持所有的View组件的属性，除此之外，它还有许多其">
+<meta name="keywords" content="RN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native之TextInput">
+<meta property="og:url" content="https://huangzhifei.github.io/2018/05/22/ReactNative/React Native之TextInput/index.html">
+<meta property="og:site_name" content="EricHuang&#39;s blog">
+<meta property="og:description" content="概述TextInput组件和Text组件类似，内部都没有使用FlexBox布局，不同的是TextInput组件支持文字的输入，因为支持文字输入，TextInput组件要比Text组件多了一些属性和方法。TextInput组件支持Text组件所有的Style属性，而TextInput组件本身是没有特有的Style属性的。 属性TextInput组件支持所有的View组件的属性，除此之外，它还有许多其">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-05T02:55:03.373Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native之TextInput">
+<meta name="twitter:description" content="概述TextInput组件和Text组件类似，内部都没有使用FlexBox布局，不同的是TextInput组件支持文字的输入，因为支持文字输入，TextInput组件要比Text组件多了一些属性和方法。TextInput组件支持Text组件所有的Style属性，而TextInput组件本身是没有特有的Style属性的。 属性TextInput组件支持所有的View组件的属性，除此之外，它还有许多其">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://huangzhifei.github.io/2018/05/22/ReactNative/React Native之TextInput/">
+
+
+
+
+
+  <title>React Native之TextInput | EricHuang's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EricHuang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每一个不码代码的日子，都是对生命的辜负!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home // 首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user // 关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags // 标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th // 分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive // 归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2018/05/22/ReactNative/React Native之TextInput/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EricHuang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React Native之TextInput</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T14:39:34+08:00">
+                2018-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/22/ReactNative/React Native之TextInput/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/22/ReactNative/React Native之TextInput/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>TextInput组件和Text组件类似，内部都没有使用FlexBox布局，不同的是TextInput组件支持文字的输入，因为支持文字输入，TextInput组件要比Text组件多了一些属性和方法。TextInput组件支持Text组件所有的Style属性，而TextInput组件本身是没有特有的Style属性的。</p>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>TextInput组件支持所有的View组件的属性，除此之外，它还有许多其他属性。</p>
+<h3 id="onChangeText"><a href="#onChangeText" class="headerlink" title="onChangeText"></a>onChangeText</h3><p>当输入框的内容发生变化时，就会调用onChangeText，此回调会传回来一个参数，当前输入框内的内容</p>
+<h3 id="onChange"><a href="#onChange" class="headerlink" title="onChange"></a>onChange</h3><p>此回调功能同上，只不过回调参数是一个event，里面包含其他内容</p>
+<h3 id="keyboardType"><a href="#keyboardType" class="headerlink" title="keyboardType"></a>keyboardType</h3><p>用于设置弹出软键盘的类型，他的值是一个枚举，值很多，其中要注意哪几个是跨平台的，去API文档一看就知道。</p>
+<h3 id="blurOnSubmit"><a href="#blurOnSubmit" class="headerlink" title="blurOnSubmit"></a>blurOnSubmit</h3><p>如果 blurOnSubmit 为 true，文本框会在按下提交健时失去焦点，对于单行输入框，些值默认为 true，多行为false。</p>
+<h3 id="onSubmitEditing"><a href="#onSubmitEditing" class="headerlink" title="onSubmitEditing"></a>onSubmitEditing</h3><p>当提交键被按下时会调用 onSubmitEditing，如果 multiline 等于 true，则此回调不可用。</p>
+<h3 id="其他跨平台属性"><a href="#其他跨平台属性" class="headerlink" title="其他跨平台属性"></a>其他跨平台属性</h3><h5 id="1、autoCapitalize"><a href="#1、autoCapitalize" class="headerlink" title="1、autoCapitalize"></a>1、autoCapitalize</h5><p>enum(‘none’, ‘sentences’, ‘words’, ‘characters’)，设置英文字母自动大写规则，取值分别表示：不自动大写、每句话首字母自动大写、每个单词首字母大写、全部字母自动大写。</p>
+<h5 id="2、autoCorrect"><a href="#2、autoCorrect" class="headerlink" title="2、autoCorrect"></a>2、autoCorrect</h5><p>是否会自动检测用户输入的英语单词正确性，默认值为true。</p>
+<h5 id="3、autoFocus"><a href="#3、autoFocus" class="headerlink" title="3、autoFocus"></a>3、autoFocus</h5><p>如果为true，在componentDidMount后会获得焦点。默认值为false。</p>
+<h5 id="4、defaultValue"><a href="#4、defaultValue" class="headerlink" title="4、defaultValue"></a>4、defaultValue</h5><p>字符初始值，当用户开始输入时，该值将改变。</p>
+<h5 id="5、placeholder"><a href="#5、placeholder" class="headerlink" title="5、placeholder"></a>5、placeholder</h5><p>文本输入之前将呈现的字符串，多用于提示用户应该输入什么。</p>
+<h5 id="6、placeholderTextColor"><a href="#6、placeholderTextColor" class="headerlink" title="6、placeholderTextColor"></a>6、placeholderTextColor</h5><p>文本输入之前将呈现的字符串的颜色。</p>
+<h5 id="7、editable"><a href="#7、editable" class="headerlink" title="7、editable"></a>7、editable</h5><p>是否允许修改字符，默认值为true。</p>
+<h5 id="8、maxLength"><a href="#8、maxLength" class="headerlink" title="8、maxLength"></a>8、maxLength</h5><p>最多允许用户输入多少字符。</p>
+<h5 id="9、caretHidden"><a href="#9、caretHidden" class="headerlink" title="9、caretHidden"></a>9、caretHidden</h5><p>如果为true，则隐藏光标。</p>
+<h5 id="10、multiline"><a href="#10、multiline" class="headerlink" title="10、multiline"></a>10、multiline</h5><p>如果为true，则文本输入可以是多行的，默认值为false。</p>
+<h5 id="11、secureTextEntry"><a href="#11、secureTextEntry" class="headerlink" title="11、secureTextEntry"></a>11、secureTextEntry</h5><p>文本框是否用于输入密码，默认值为false。</p>
+<h5 id="12、selectTextOnFocus"><a href="#12、selectTextOnFocus" class="headerlink" title="12、selectTextOnFocus"></a>12、selectTextOnFocus</h5><p>如果为true，则文本框获取焦点时，组件中的内容会被自动选中。</p>
+<h5 id="13、onFocus"><a href="#13、onFocus" class="headerlink" title="13、onFocus"></a>13、onFocus</h5><p>当文本框获得焦点的时候调用此回调函数。</p>
+<h5 id="14、onEndEditing"><a href="#14、onEndEditing" class="headerlink" title="14、onEndEditing"></a>14、onEndEditing</h5><p>当文本输入结束后调用此回调函数。</p>
+<h5 id="15、onLayout"><a href="#15、onLayout" class="headerlink" title="15、onLayout"></a>15、onLayout</h5><p>当组件挂载或者布局变化的时候调用，参数为{x, y, width, height}。</p>
+<h5 id="16、onScroll"><a href="#16、onScroll" class="headerlink" title="16、onScroll"></a>16、onScroll</h5><p>在内容滚动时持续调用，传回参数的格式形如{ nativeEvent: { contentOffset: { x, y } } }。</p>
+<h5 id="17、onSelectionChange"><a href="#17、onSelectionChange" class="headerlink" title="17、onSelectionChange"></a>17、onSelectionChange</h5><p>长按选择文本时，选择范围变化时调用此函数，传回参数的格式形如 { nativeEvent: { selection: { start, end } } }。</p>
+<h5 id="18、value"><a href="#18、value" class="headerlink" title="18、value"></a>18、value</h5><p>文本框中的文字内容。</p>
+<h3 id="Android平台独有属性"><a href="#Android平台独有属性" class="headerlink" title="Android平台独有属性"></a>Android平台独有属性</h3><h5 id="1、inlineImageLeft"><a href="#1、inlineImageLeft" class="headerlink" title="1、inlineImageLeft"></a>1、inlineImageLeft</h5><p>指定一个图片放置在左侧。</p>
+<h5 id="2、inlineImagePadding"><a href="#2、inlineImagePadding" class="headerlink" title="2、inlineImagePadding"></a>2、inlineImagePadding</h5><p>左侧图片的Padding(如果有的话)，以及文本框本身的Padding。</p>
+<h5 id="3、numberOfLines"><a href="#3、numberOfLines" class="headerlink" title="3、numberOfLines"></a>3、numberOfLines</h5><p>TextInput的行数。</p>
+<h5 id="4、underlineColorAndroid"><a href="#4、underlineColorAndroid" class="headerlink" title="4、underlineColorAndroid"></a>4、underlineColorAndroid</h5><p>TextInput的下划线颜色。</p>
+<h5 id="5、returnKeyLabel"><a href="#5、returnKeyLabel" class="headerlink" title="5、returnKeyLabel"></a>5、returnKeyLabel</h5><p>设置软键盘回车键的内容，优先级高于returnKeyType。</p>
+<h5 id="6、disableFullscreenUI"><a href="#6、disableFullscreenUI" class="headerlink" title="6、disableFullscreenUI"></a>6、disableFullscreenUI</h5><p>值为false时(默认值)，如果TextInput的输入空间小，系统可能会进入全屏文本输入模式。</p>
+<h3 id="iOS平台独有属性"><a href="#iOS平台独有属性" class="headerlink" title="iOS平台独有属性"></a>iOS平台独有属性</h3><h5 id="1、clearButtonMode"><a href="#1、clearButtonMode" class="headerlink" title="1、clearButtonMode"></a>1、clearButtonMode</h5><p>enum(‘never’, ‘while-editing’, ‘unless-editing’, ‘always’)，何时在文本框右侧显示清除按钮</p>
+<h5 id="2、clearTextOnFocus"><a href="#2、clearTextOnFocus" class="headerlink" title="2、clearTextOnFocus"></a>2、clearTextOnFocus</h5><p>如果为true，每次开始输入的时候都会清除文本框的内容</p>
+<h5 id="3、keyboardAppearance"><a href="#3、keyboardAppearance" class="headerlink" title="3、keyboardAppearance"></a>3、keyboardAppearance</h5><p>enum(‘default’, ‘light’, ‘dark’)，键盘的颜色</p>
+<h5 id="4、onKeyPress"><a href="#4、onKeyPress" class="headerlink" title="4、onKeyPress"></a>4、onKeyPress</h5><p>回调函数，一个键被按下的时候调用此回调，传递给回调函数的参数为{ nativeEvent: { key: keyValue } }</p>
+<h5 id="5、spellCheck"><a href="#5、spellCheck" class="headerlink" title="5、spellCheck"></a>5、spellCheck</h5><p>如果为false，则禁用拼写检查的样式（比如红色下划线）</p>
+<h5 id="6、enablesReturnKeyAutomatically"><a href="#6、enablesReturnKeyAutomatically" class="headerlink" title="6、enablesReturnKeyAutomatically"></a>6、enablesReturnKeyAutomatically</h5><p>如果为true，键盘会在文本框内没有文字的时候禁用确认按钮 ，默认值为false</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="clear"><a href="#clear" class="headerlink" title="clear()"></a>clear()</h3><p>用于清空输入框的内容，我们通过给 TextInput 设置 ref 名，来在其他地方获取到组件对于操作。</p>
+<p>在 TextInput 标签中定义引用的名称：ref=”textInputRefer”，然后在通过 this.refs.textInputRefer 得到其引用。</p>
+<h3 id="isFocused-boolean"><a href="#isFocused-boolean" class="headerlink" title="isFocused(): boolean"></a>isFocused(): boolean</h3><p>返回值表明当前输入框是否获得了焦点。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RN/" rel="tag"># RN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/21/ReactNative/React Native之获取组件位置与大小/" rel="next" title="React Native之获取组件位置与大小">
+                <i class="fa fa-chevron-left"></i> React Native之获取组件位置与大小
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/24/ReactNative/React Native之Tab与导航栏/" rel="prev" title="React Native之Tab与导航栏">
+                React Native之Tab与导航栏 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png" alt="Eric Huang">
+            
+              <p class="site-author-name" itemprop="name">Eric Huang</p>
+              <p class="site-description motion-element" itemprop="description">~ 生活不止苟且，还有诗和远方，迎着朝阳前进，看风与雪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/huangzhifei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/chongzizizizizizi/home?leftnav=1" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性"><span class="nav-number">2.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#onChangeText"><span class="nav-number">2.1.</span> <span class="nav-text">onChangeText</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onChange"><span class="nav-number">2.2.</span> <span class="nav-text">onChange</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#keyboardType"><span class="nav-number">2.3.</span> <span class="nav-text">keyboardType</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#blurOnSubmit"><span class="nav-number">2.4.</span> <span class="nav-text">blurOnSubmit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onSubmitEditing"><span class="nav-number">2.5.</span> <span class="nav-text">onSubmitEditing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他跨平台属性"><span class="nav-number">2.6.</span> <span class="nav-text">其他跨平台属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、autoCapitalize"><span class="nav-number">2.6.0.1.</span> <span class="nav-text">1、autoCapitalize</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、autoCorrect"><span class="nav-number">2.6.0.2.</span> <span class="nav-text">2、autoCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、autoFocus"><span class="nav-number">2.6.0.3.</span> <span class="nav-text">3、autoFocus</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、defaultValue"><span class="nav-number">2.6.0.4.</span> <span class="nav-text">4、defaultValue</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、placeholder"><span class="nav-number">2.6.0.5.</span> <span class="nav-text">5、placeholder</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、placeholderTextColor"><span class="nav-number">2.6.0.6.</span> <span class="nav-text">6、placeholderTextColor</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7、editable"><span class="nav-number">2.6.0.7.</span> <span class="nav-text">7、editable</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8、maxLength"><span class="nav-number">2.6.0.8.</span> <span class="nav-text">8、maxLength</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9、caretHidden"><span class="nav-number">2.6.0.9.</span> <span class="nav-text">9、caretHidden</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10、multiline"><span class="nav-number">2.6.0.10.</span> <span class="nav-text">10、multiline</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11、secureTextEntry"><span class="nav-number">2.6.0.11.</span> <span class="nav-text">11、secureTextEntry</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12、selectTextOnFocus"><span class="nav-number">2.6.0.12.</span> <span class="nav-text">12、selectTextOnFocus</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#13、onFocus"><span class="nav-number">2.6.0.13.</span> <span class="nav-text">13、onFocus</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14、onEndEditing"><span class="nav-number">2.6.0.14.</span> <span class="nav-text">14、onEndEditing</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#15、onLayout"><span class="nav-number">2.6.0.15.</span> <span class="nav-text">15、onLayout</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#16、onScroll"><span class="nav-number">2.6.0.16.</span> <span class="nav-text">16、onScroll</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#17、onSelectionChange"><span class="nav-number">2.6.0.17.</span> <span class="nav-text">17、onSelectionChange</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#18、value"><span class="nav-number">2.6.0.18.</span> <span class="nav-text">18、value</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android平台独有属性"><span class="nav-number">2.7.</span> <span class="nav-text">Android平台独有属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、inlineImageLeft"><span class="nav-number">2.7.0.1.</span> <span class="nav-text">1、inlineImageLeft</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、inlineImagePadding"><span class="nav-number">2.7.0.2.</span> <span class="nav-text">2、inlineImagePadding</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、numberOfLines"><span class="nav-number">2.7.0.3.</span> <span class="nav-text">3、numberOfLines</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、underlineColorAndroid"><span class="nav-number">2.7.0.4.</span> <span class="nav-text">4、underlineColorAndroid</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、returnKeyLabel"><span class="nav-number">2.7.0.5.</span> <span class="nav-text">5、returnKeyLabel</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、disableFullscreenUI"><span class="nav-number">2.7.0.6.</span> <span class="nav-text">6、disableFullscreenUI</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS平台独有属性"><span class="nav-number">2.8.</span> <span class="nav-text">iOS平台独有属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、clearButtonMode"><span class="nav-number">2.8.0.1.</span> <span class="nav-text">1、clearButtonMode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、clearTextOnFocus"><span class="nav-number">2.8.0.2.</span> <span class="nav-text">2、clearTextOnFocus</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、keyboardAppearance"><span class="nav-number">2.8.0.3.</span> <span class="nav-text">3、keyboardAppearance</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、onKeyPress"><span class="nav-number">2.8.0.4.</span> <span class="nav-text">4、onKeyPress</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、spellCheck"><span class="nav-number">2.8.0.5.</span> <span class="nav-text">5、spellCheck</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、enablesReturnKeyAutomatically"><span class="nav-number">2.8.0.6.</span> <span class="nav-text">6、enablesReturnKeyAutomatically</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">3.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#clear"><span class="nav-number">3.1.</span> <span class="nav-text">clear()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isFocused-boolean"><span class="nav-number">3.2.</span> <span class="nav-text">isFocused(): boolean</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric Huang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://huangzhifei.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://huangzhifei.github.io/2018/05/22/ReactNative/React Native之TextInput/';
+          this.page.identifier = '2018/05/22/ReactNative/React Native之TextInput/';
+          this.page.title = 'React Native之TextInput';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://huangzhifei.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

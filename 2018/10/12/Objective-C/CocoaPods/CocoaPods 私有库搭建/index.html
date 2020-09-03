@@ -1,37 +1,918 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CocoaPods,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EricHuang's blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="参照官方文档 CocoaPods 官方文档 一、创建两个 git 仓库我们创建两个 git 仓库，一个用来做私有 Spec Repo，一个是我们自己的公共组件： 第一个仓库名称是 Spec，专门用来做私有Spec Repo。 第二个仓库名称是 BGNetwork，这个就是我们公共组件库。 在这里，我们来说一下什么是Spec Repo? 他是所有的 Pods 的一个索引，就是一个容器，所有公开的 P">
+<meta name="keywords" content="CocoaPods">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CocoaPods 私有库搭建">
+<meta property="og:url" content="https://huangzhifei.github.io/2018/10/12/Objective-C/CocoaPods/CocoaPods 私有库搭建/index.html">
+<meta property="og:site_name" content="EricHuang&#39;s blog">
+<meta property="og:description" content="参照官方文档 CocoaPods 官方文档 一、创建两个 git 仓库我们创建两个 git 仓库，一个用来做私有 Spec Repo，一个是我们自己的公共组件： 第一个仓库名称是 Spec，专门用来做私有Spec Repo。 第二个仓库名称是 BGNetwork，这个就是我们公共组件库。 在这里，我们来说一下什么是Spec Repo? 他是所有的 Pods 的一个索引，就是一个容器，所有公开的 P">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-05T02:55:03.368Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CocoaPods 私有库搭建">
+<meta name="twitter:description" content="参照官方文档 CocoaPods 官方文档 一、创建两个 git 仓库我们创建两个 git 仓库，一个用来做私有 Spec Repo，一个是我们自己的公共组件： 第一个仓库名称是 Spec，专门用来做私有Spec Repo。 第二个仓库名称是 BGNetwork，这个就是我们公共组件库。 在这里，我们来说一下什么是Spec Repo? 他是所有的 Pods 的一个索引，就是一个容器，所有公开的 P">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://huangzhifei.github.io/2018/10/12/Objective-C/CocoaPods/CocoaPods 私有库搭建/">
+
+
+
+
+
+  <title>CocoaPods 私有库搭建 | EricHuang's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EricHuang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每一个不码代码的日子，都是对生命的辜负!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home // 首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user // 关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags // 标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th // 分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive // 归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2018/10/12/Objective-C/CocoaPods/CocoaPods 私有库搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EricHuang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CocoaPods 私有库搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-12T16:07:58+08:00">
+                2018-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CocoaPods/" itemprop="url" rel="index">
+                    <span itemprop="name">CocoaPods</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/12/Objective-C/CocoaPods/CocoaPods 私有库搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/12/Objective-C/CocoaPods/CocoaPods 私有库搭建/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参照官方文档 <a href="https://guides.cocoapods.org/terminal/commands.html#pod_repo_push">CocoaPods 官方文档</a></p>
+<h3 id="一、创建两个-git-仓库"><a href="#一、创建两个-git-仓库" class="headerlink" title="一、创建两个 git 仓库"></a>一、创建两个 git 仓库</h3><p>我们创建两个 git 仓库，一个用来做私有 Spec Repo，一个是我们自己的公共组件：</p>
+<p>第一个仓库名称是 Spec，专门用来做私有Spec Repo。</p>
+<p>第二个仓库名称是 BGNetwork，这个就是我们公共组件库。</p>
+<p>在这里，我们来说一下什么是Spec Repo?</p>
+<pre><code>他是所有的 Pods 的一个索引，就是一个容器，所有公开的 Pods 都在这个里面，他实际是一个 Git 仓库 remote 端。
+在 GitHub 上，当你使用了 Cocoapods 后他会被 clone 到本地的 ~/.cocoapods/repos 目录下，
+可以进入到这个目录看到 master 文件夹就是这个官方的 Spec Repo 了。
+</code></pre><h3 id="二、添加私有Spec-repo（索引库）-到-Cocoapods"><a href="#二、添加私有Spec-repo（索引库）-到-Cocoapods" class="headerlink" title="二、添加私有Spec repo（索引库） 到 Cocoapods"></a>二、添加私有Spec repo（索引库） 到 Cocoapods</h3><p>主要命令是pod repo add REPO_NAME SOURCE_URL。其中，REPO_NAME 是私有 repo 的名字，取一个容易记住的名字，后面还会用到，以后公司内部的组件对应的 podspec 都可以推送到这个 repo 中；SOURCE_URL 就是刚刚我们创建的 Spec 仓库链接。</p>
+<pre><code>$ pod repo add eric https://github.com/eric/Spec.git
+$ ls ~/.cocoapods/repos  
+  eric    master
+</code></pre><p>这时，你会发现有两个文件夹 eric 和 master，master 是 Cocoapods 官方的 repo，而 eric 就是我刚刚创建的。<br>进入 eric 文件夹查看，你会发现它是 clone 了一份 <a href="https://github.com/eric/Spec.git。">https://github.com/eric/Spec.git。</a></p>
+<p>在这里，我们是一个空的仓库，可以不检查，但是你的仓库如果有什么其他东西的话，可以检查一下。</p>
+<pre><code>$ cd ~/.cocoapods/repos/eric
+$ pod repo lint .
+</code></pre><h3 id="三、制作自己的公共组件"><a href="#三、制作自己的公共组件" class="headerlink" title="三、制作自己的公共组件"></a>三、制作自己的公共组件</h3><h4 id="1、将我们前面创建的-BGNetwork-项目克隆到本地"><a href="#1、将我们前面创建的-BGNetwork-项目克隆到本地" class="headerlink" title="1、将我们前面创建的 BGNetwork 项目克隆到本地"></a>1、将我们前面创建的 BGNetwork 项目克隆到本地</h4><pre><code>$ git clone https://github.com/eric/BGNetwork.git
+</code></pre><h4 id="2、在本地我们使用了-xcode-创建了项目，并且写了一个网络框架，运行没有问题，我们准备提交到-github，并打上版本号。"><a href="#2、在本地我们使用了-xcode-创建了项目，并且写了一个网络框架，运行没有问题，我们准备提交到-github，并打上版本号。" class="headerlink" title="2、在本地我们使用了 xcode 创建了项目，并且写了一个网络框架，运行没有问题，我们准备提交到 github，并打上版本号。"></a>2、在本地我们使用了 xcode 创建了项目，并且写了一个网络框架，运行没有问题，我们准备提交到 github，并打上版本号。</h4><pre><code>$ git add .
+$ git commit -m &apos;add file&apos;
+$ git push origin master
+$ git tag -m &apos;add tag&apos; &apos;0.1.1&apos;
+$ git push --tags
+</code></pre><h4 id="3、我们开始制作-Podspec-文件。"><a href="#3、我们开始制作-Podspec-文件。" class="headerlink" title="3、我们开始制作 Podspec 文件。"></a>3、我们开始制作 Podspec 文件。</h4><p>BGNetwork 是一个基于 AFNetworking 而封装的网络框架，它主要的源文件都在 BGNetwork/BGNetwork 路径下。我们将它放在 CocoaPods 给第三方使用，主要是将这个文件夹下的源文件加载到第三方的项目中以供使用。<br>下面是供第三方使用的源文件结构，具体可以下载 BGNetwork 代码查看</p>
+<pre><code>____BGNetwork
+| |____BGAFHTTPClient.h
+| |____BGAFHTTPClient.m
+| |____BGAFRequestSerializer.h
+| |____BGAFRequestSerializer.m
+| |____BGAFResponseSerializer.h
+| |____BGAFResponseSerializer.m
+| |____BGNetworkCache.h
+| |____BGNetworkCache.m
+| |____BGNetworkConfiguration.h
+| |____BGNetworkConfiguration.m
+| |____BGNetworkConnector.h
+| |____BGNetworkConnector.m
+| |____BGNetworkManager.h
+| |____BGNetworkManager.m
+| |____BGNetworkRequest.h
+| |____BGNetworkRequest.m
+| |____BGNetworkUtil.h
+| |____BGNetworkUtil.m
+</code></pre><p>在 BGNetwork 项目的根目录下创建一个 BGNetwork.podspec 文件，对应上面的需求，我们的 podspec 可以这么写</p>
+<pre><code>Pod::Spec.new do |spec|
+  #项目名称
+  spec.name         = &apos;BGNetwork&apos;
+  #版本号
+  spec.version      = &apos;0.1.1&apos;
+  #开源协议
+  spec.license      = &apos;MIT&apos;
+  #对开源项目的描述
+  spec.summary      = &apos;BGNetwork is a request util based on AFNetworking&apos;
+  #开源项目的首页
+  spec.homepage     = &apos;https://github.com/eric/BGNetwork&apos;
+  #作者信息
+  spec.author       = &#123;&apos;eric&apos; =&gt; &apos;eric@126.com&apos;&#125;
+  #项目的源和版本号
+  spec.source       = &#123; :git =&gt; &apos;https://github.com/eric/BGNetwork.git&apos;, :tag =&gt; &apos;0.1.1&apos; &#125;
+  #源文件，这个就是供第三方使用的源文件
+  spec.source_files = &quot;BGNetwork/*&quot;
+  #适用于ios7及以上版本
+  spec.platform     = :ios, &apos;7.0&apos;
+  #使用的是ARC
+  spec.requires_arc = true
+  #依赖AFNetworking2.0
+  spec.dependency &apos;AFNetworking&apos;, &apos;~&gt; 2.0&apos;
+end
+</code></pre><p><strong>注意：spec.source 源是 BGNetwork 的 git 仓库，版本号是我们上一步打上的版本号 0.1.1。</strong></p>
+<h4 id="4、验证并推送到服务器"><a href="#4、验证并推送到服务器" class="headerlink" title="4、验证并推送到服务器"></a>4、验证并推送到服务器</h4><p>在推送前，我们先验证Podspec(检查本地pod)，验证的时候是验证BGNetwork.podspec文件，所以我们需要保证进入的目录和 BGNetwork.podspec 同级的，<br>验证命令如下：</p>
+<pre><code>$ pod lib lint BGNetwork.podspec --no-clean --allow-warnings --verbose
+或
+$ pod lib lint 
+
+# 注意可以在最后面 带上 --sources = ‘’
+$ pod lib lint BGNetwork.podspec --no-clean --allow-warnings --verbose --sources = &apos;xxxx,https://github.com/CocoaPods/Specs.git&apos;
+
+# The sources from which to pull dependent pods(defaults to https://github.com/CocoaPods/Specs.git). Multiple sources must be comma-delimited.
+# 意思是 这个podspec里面依赖了另一个私有库，为了能找到依赖私有库的地址，需要带上私有库的spec(索引库地址),其中 &apos;xxxx&apos;就是其地址
+</code></pre><p><strong>注意：验证的时候，会获取 BGNetwork.podspec 文件中的 spec.source 来获取 git 服务器上面对应版本的代码，<br>然后再找到 spec.source_files 中的源代码，通过 xcode 命令行工具建立工程并且进行编译。所以这一步的过程会比较久，如果编译没有错误，就验证通过。<br>建议加上 –fail-fast ，不然每次都是全部编译完成后才报错，当 podspec 很大的时候，会特别费时，加上此参数可以让其停止在错误的地方</strong></p>
+<p>如果没有错误和警告我们就可以推送到服务器了，推送使用的命令如下：</p>
+<pre><code>$ pod repo push REPO_NAME SPEC_NAME.podspec --allow-warnings --verbose
+
+# 注意可以在最后面 带上 --sources = ‘’
+$ pod repo push REPO_NAME SPEC_NAME.podspec --allow-warnings --verbose --sources = &apos;xxxx,https://github.com/CocoaPods/Specs.git&apos;
+
+# The sources from which to pull dependent pods(defaults to https://github.com/CocoaPods/Specs.git). Multiple sources must be comma-delimited.
+# 意思是 这个podspec里面依赖了另一个私有库，为了能找到依赖私有库的地址，需要带上私有库的spec(索引库地址),其中 &apos;xxxx&apos;就是其地址
+</code></pre><p>它也会先验证，然后再推送。我这里推送 BGNetwork 命令是：</p>
+<pre><code>$ pod repo push eric BGNetwork.podspec
+</code></pre><p>如果没有错误，但是有警告，我们就将警告解决，也可以加 –allow-warnings 来提交</p>
+<pre><code>$ pod repo push eric BGNetwork.podspec --allow-warnings
+</code></pre><p>如果有错误，我们可以去查看错误信息对应下的Note信息并解决。在这错误当中，常常会遇到找不到对应文件的错误，这个时候你需要查看<br>BGNetwork.podspec 文件中 spec.source 下 git 仓库链接是否没问题，git 仓库下对应的 tag 版本中 spec.source_files 路径下是否正确。</p>
+<p>如果查看 Note 信息看不出什么问题，可以加上 verbose 参数进行更详细的查看。</p>
+<pre><code>$ pod repo push eric BGNetwork.podspec --allow-warnings --verbose
+</code></pre><p><strong>注意事项：碰到本地使用 pod lib lint 验证通过，但是 push 到服务器却失败了，这个时候很可能就是服务器 tag 版本不对，使用 –verbose 能查看详细的错误信息。</strong></p>
+<h4 id="5、搜索我们的框架"><a href="#5、搜索我们的框架" class="headerlink" title="5、搜索我们的框架"></a>5、搜索我们的框架</h4><p>到这一步，我们就可以通过 pod search BGNetwork 来搜索了，搜索到了说明我们私有源建立成功。</p>
+<pre><code>$ pod search BGNetwork
+-&gt; BGNetwork (0.1.2)
+   BGNetwork is a request util based on AFNetworking
+   pod &apos;BGNetwork&apos;, &apos;~&gt; 0.1.2&apos;
+   Homepage: https://github.com/eric/BGNetwork
+   Source:   https://github.com/eric/BGNetwork.git
+   Versions: 0.1.1, 0.1.0 [eric repo] - 0.1.2, 0.1.1 [master repo]
+</code></pre><p>由上面的搜索知道，BGNetwork 在 eric 这个私有 repo 中存在 0.1.1 和 0.1.0 版本，在 master 中存在 0.1.2 和 0.1.1 版本。<br>搜索成功之后，我们将 BGNetwork.podspec 也推送到远程服务器。</p>
+<h3 id="四、注意"><a href="#四、注意" class="headerlink" title="四、注意"></a>四、注意</h3><h4 id="1、途中遇到了几次问题，就是pod-repo-push不上去，显示没有找到对应文件，后来发现是版本的问题，没有打上版本号或者Podspec中版本错了。"><a href="#1、途中遇到了几次问题，就是pod-repo-push不上去，显示没有找到对应文件，后来发现是版本的问题，没有打上版本号或者Podspec中版本错了。" class="headerlink" title="1、途中遇到了几次问题，就是pod repo push不上去，显示没有找到对应文件，后来发现是版本的问题，没有打上版本号或者Podspec中版本错了。"></a>1、途中遇到了几次问题，就是pod repo push不上去，显示没有找到对应文件，后来发现是版本的问题，没有打上版本号或者Podspec中版本错了。</h4><h4 id="2、若是在框架当中，存在不同的文件夹，请使用-subspec。如果不同文件夹之间的文件有相互导入的情况，请将被导入的头文件设置为-public-header-files，"><a href="#2、若是在框架当中，存在不同的文件夹，请使用-subspec。如果不同文件夹之间的文件有相互导入的情况，请将被导入的头文件设置为-public-header-files，" class="headerlink" title="2、若是在框架当中，存在不同的文件夹，请使用 subspec。如果不同文件夹之间的文件有相互导入的情况，请将被导入的头文件设置为 public_header_files，"></a>2、若是在框架当中，存在不同的文件夹，请使用 subspec。如果不同文件夹之间的文件有相互导入的情况，请将被导入的头文件设置为 public_header_files，</h4><h4 id="并且通过-dependency-设置依赖，具体可以参考-AFNetworking-的-podspec-文件。"><a href="#并且通过-dependency-设置依赖，具体可以参考-AFNetworking-的-podspec-文件。" class="headerlink" title="并且通过 dependency 设置依赖，具体可以参考 AFNetworking 的 podspec 文件。"></a>并且通过 dependency 设置依赖，具体可以参考 AFNetworking 的 podspec 文件。</h4><h4 id="3、若是需要提交给官方，请使用"><a href="#3、若是需要提交给官方，请使用" class="headerlink" title="3、若是需要提交给官方，请使用"></a>3、若是需要提交给官方，请使用</h4><pre><code>$ pod trunk register youremail
+# 查看信息
+$ pod trunk me
+# 将对应的pod推送到服务器
+$ pod trunk push
+</code></pre><h4 id="4、使用-pod-install-时，它首先会更新整个官方的源，而-Cocoapods-每天都有很多人提交，所以更新比较慢。所以，建议每过一段时间更新一下官方库，平常的时候，咱们可以在-install-或-update-加一个参数-–no-repo-update-让它不用更新。"><a href="#4、使用-pod-install-时，它首先会更新整个官方的源，而-Cocoapods-每天都有很多人提交，所以更新比较慢。所以，建议每过一段时间更新一下官方库，平常的时候，咱们可以在-install-或-update-加一个参数-–no-repo-update-让它不用更新。" class="headerlink" title="4、使用 pod install 时，它首先会更新整个官方的源，而 Cocoapods 每天都有很多人提交，所以更新比较慢。所以，建议每过一段时间更新一下官方库，平常的时候，咱们可以在 install 或 update 加一个参数 –no-repo-update 让它不用更新。"></a>4、使用 pod install 时，它首先会更新整个官方的源，而 Cocoapods 每天都有很多人提交，所以更新比较慢。所以，建议每过一段时间更新一下官方库，平常的时候，咱们可以在 install 或 update 加一个参数 –no-repo-update 让它不用更新。</h4><pre><code>$ pod install --verbose --no-repo-update
+$ pod update --verbose --no-repo-update
+</code></pre><h4 id="5、多个模块"><a href="#5、多个模块" class="headerlink" title="5、多个模块"></a>5、多个模块</h4><p>但如果我们需要拆分出几个子模块让开发者去选择, 这里有两种方案:</p>
+<p>开启多一个Git仓库, 分开来存储<br>通过编写podspec文件的技巧拆分，（参照 AFNetworking)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CocoaPods/" rel="tag"># CocoaPods</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/11/Objective-C/2018/iOS 渲染过程/" rel="next" title="iOS 渲染过程">
+                <i class="fa fa-chevron-left"></i> iOS 渲染过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/17/Objective-C/CocoaPods/podspec的subspec使用/" rel="prev" title="podspec的subspec使用">
+                podspec的subspec使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png" alt="Eric Huang">
+            
+              <p class="site-author-name" itemprop="name">Eric Huang</p>
+              <p class="site-description motion-element" itemprop="description">~ 生活不止苟且，还有诗和远方，迎着朝阳前进，看风与雪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/huangzhifei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/chongzizizizizizi/home?leftnav=1" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、创建两个-git-仓库"><span class="nav-number">1.</span> <span class="nav-text">一、创建两个 git 仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、添加私有Spec-repo（索引库）-到-Cocoapods"><span class="nav-number">2.</span> <span class="nav-text">二、添加私有Spec repo（索引库） 到 Cocoapods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、制作自己的公共组件"><span class="nav-number">3.</span> <span class="nav-text">三、制作自己的公共组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、将我们前面创建的-BGNetwork-项目克隆到本地"><span class="nav-number">3.1.</span> <span class="nav-text">1、将我们前面创建的 BGNetwork 项目克隆到本地</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、在本地我们使用了-xcode-创建了项目，并且写了一个网络框架，运行没有问题，我们准备提交到-github，并打上版本号。"><span class="nav-number">3.2.</span> <span class="nav-text">2、在本地我们使用了 xcode 创建了项目，并且写了一个网络框架，运行没有问题，我们准备提交到 github，并打上版本号。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、我们开始制作-Podspec-文件。"><span class="nav-number">3.3.</span> <span class="nav-text">3、我们开始制作 Podspec 文件。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、验证并推送到服务器"><span class="nav-number">3.4.</span> <span class="nav-text">4、验证并推送到服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、搜索我们的框架"><span class="nav-number">3.5.</span> <span class="nav-text">5、搜索我们的框架</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、注意"><span class="nav-number">4.</span> <span class="nav-text">四、注意</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、途中遇到了几次问题，就是pod-repo-push不上去，显示没有找到对应文件，后来发现是版本的问题，没有打上版本号或者Podspec中版本错了。"><span class="nav-number">4.1.</span> <span class="nav-text">1、途中遇到了几次问题，就是pod repo push不上去，显示没有找到对应文件，后来发现是版本的问题，没有打上版本号或者Podspec中版本错了。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、若是在框架当中，存在不同的文件夹，请使用-subspec。如果不同文件夹之间的文件有相互导入的情况，请将被导入的头文件设置为-public-header-files，"><span class="nav-number">4.2.</span> <span class="nav-text">2、若是在框架当中，存在不同的文件夹，请使用 subspec。如果不同文件夹之间的文件有相互导入的情况，请将被导入的头文件设置为 public_header_files，</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并且通过-dependency-设置依赖，具体可以参考-AFNetworking-的-podspec-文件。"><span class="nav-number">4.3.</span> <span class="nav-text">并且通过 dependency 设置依赖，具体可以参考 AFNetworking 的 podspec 文件。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、若是需要提交给官方，请使用"><span class="nav-number">4.4.</span> <span class="nav-text">3、若是需要提交给官方，请使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、使用-pod-install-时，它首先会更新整个官方的源，而-Cocoapods-每天都有很多人提交，所以更新比较慢。所以，建议每过一段时间更新一下官方库，平常的时候，咱们可以在-install-或-update-加一个参数-–no-repo-update-让它不用更新。"><span class="nav-number">4.5.</span> <span class="nav-text">4、使用 pod install 时，它首先会更新整个官方的源，而 Cocoapods 每天都有很多人提交，所以更新比较慢。所以，建议每过一段时间更新一下官方库，平常的时候，咱们可以在 install 或 update 加一个参数 –no-repo-update 让它不用更新。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、多个模块"><span class="nav-number">4.6.</span> <span class="nav-text">5、多个模块</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric Huang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://huangzhifei.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://huangzhifei.github.io/2018/10/12/Objective-C/CocoaPods/CocoaPods 私有库搭建/';
+          this.page.identifier = '2018/10/12/Objective-C/CocoaPods/CocoaPods 私有库搭建/';
+          this.page.title = 'CocoaPods 私有库搭建';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://huangzhifei.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

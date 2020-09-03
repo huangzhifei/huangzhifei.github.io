@@ -1,37 +1,871 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EricHuang's blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="描述如果要实现一个底部带有相关推荐和评论的资讯详情页，很自然会想到 WebView 和 TableView 嵌套使用的方案！因为评论使用原生体验好，资讯、文章类使用 WebView 动态与高效。 我们可以很容易想到最简单的实现方案： 这个方案是 WebView 作为 TableView 的 TableHeaderView 或者 TableView 的一个 Cell，然后根据网页的高度动态的更新 T">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS之资讯详情实现-WebView和TableView混合使用">
+<meta property="og:url" content="https://huangzhifei.github.io/2018/06/01/Objective-C/2018/iOS之资讯详情实现-WebView和TableView混合使用/index.html">
+<meta property="og:site_name" content="EricHuang&#39;s blog">
+<meta property="og:description" content="描述如果要实现一个底部带有相关推荐和评论的资讯详情页，很自然会想到 WebView 和 TableView 嵌套使用的方案！因为评论使用原生体验好，资讯、文章类使用 WebView 动态与高效。 我们可以很容易想到最简单的实现方案： 这个方案是 WebView 作为 TableView 的 TableHeaderView 或者 TableView 的一个 Cell，然后根据网页的高度动态的更新 T">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/Netease.jpeg">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/toutiao.jpeg">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/toutiao1.png">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/toutiao2.png">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/tx.png">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/webI.png">
+<meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/web2.png">
+<meta property="og:updated_time" content="2020-01-05T02:55:03.366Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS之资讯详情实现-WebView和TableView混合使用">
+<meta name="twitter:description" content="描述如果要实现一个底部带有相关推荐和评论的资讯详情页，很自然会想到 WebView 和 TableView 嵌套使用的方案！因为评论使用原生体验好，资讯、文章类使用 WebView 动态与高效。 我们可以很容易想到最简单的实现方案： 这个方案是 WebView 作为 TableView 的 TableHeaderView 或者 TableView 的一个 Cell，然后根据网页的高度动态的更新 T">
+<meta name="twitter:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/Netease.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://huangzhifei.github.io/2018/06/01/Objective-C/2018/iOS之资讯详情实现-WebView和TableView混合使用/">
+
+
+
+
+
+  <title>iOS之资讯详情实现-WebView和TableView混合使用 | EricHuang's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EricHuang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每一个不码代码的日子，都是对生命的辜负!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home // 首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user // 关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags // 标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th // 分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive // 归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2018/06/01/Objective-C/2018/iOS之资讯详情实现-WebView和TableView混合使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EricHuang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS之资讯详情实现-WebView和TableView混合使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-01T12:12:55+08:00">
+                2018-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS技术/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/01/Objective-C/2018/iOS之资讯详情实现-WebView和TableView混合使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/01/Objective-C/2018/iOS之资讯详情实现-WebView和TableView混合使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>如果要实现一个底部带有相关推荐和评论的资讯详情页，很自然会想到 WebView 和 TableView 嵌套使用的方案！因为评论使用原生体验好，资讯、文章类使用 WebView 动态与高效。</p>
+<p><strong>我们可以很容易想到最简单的实现方案：</strong></p>
+<p>这个方案是 WebView 作为 TableView 的 TableHeaderView 或者 TableView 的一个 Cell，然后根据网页的高度动态的更新 TableHeaderView 和 Cell 的高度，这个方案逻辑上最简单，也最容易实现，而且滑动效果也比较好。</p>
+<p>然而在实际应用中发现如果资讯内容很长而且带有大量图片和GIf图片的时候，APP内存占用会暴增，有被系统杀掉的风险。然而在单纯的使用 WebView 的时候内存占用不会那么大，原因是 WebView 会根据自身可视区域的大小动态渲染 HTML 内容，不会一次性的渲染所有的 HTML 内容。这个方案只是简单的将 WebView 的大小更新为 HTML 的实际大小，WebView 将会一次性的渲染所有的 HTML 内容，因此直接使用这种方案会有内存占用暴增的风险。</p>
+<h2 id="业界主流App的实现方案"><a href="#业界主流App的实现方案" class="headerlink" title="业界主流App的实现方案"></a>业界主流App的实现方案</h2><h3 id="1、网易新闻"><a href="#1、网易新闻" class="headerlink" title="1、网易新闻"></a>1、网易新闻</h3><p>通过 Reveal 查看网易新闻的视图结构，发现整个新闻详情页都是通过 H5 实现的，包括评论、广告和相关推荐</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/Netease.jpeg" alt></p>
+<h3 id="2、今日头条"><a href="#2、今日头条" class="headerlink" title="2、今日头条"></a>2、今日头条</h3><p>今日头条新闻详情页最外层是 ScrollView，WebView 和 ThemedView（里面包含 TableView）是 ScrollView 同级 SubView。</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/toutiao.jpeg" alt></p>
+<p>查看 WebView 的布局属性，发现 WebView 并没有被撑开，但是 Y 的坐标是一直在发生变化</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/toutiao1.png" alt></p>
+<p>查看ThemedView的布局属性，发现其Y坐标是也是发生变化的，ThemedView正好位于WebView的下方。</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/toutiao2.png" alt></p>
+<p>通过以上分析基本可以推测出头条的解决方案：</p>
+<p>1、ScrollView 是作为 ContainerView，WebView 和 TableView 是 ScrollView 的 subview</p>
+<p>2、WebView 和 TableView 禁止掉了滚动，WebView 和 TableView 是由 ScrollView 的滚动驱动的，也就是 WebView 和 TableView 无法通过手指直接改变其 contentOffset，他们的 contentOffset 是由 ScrollView 滚动时的 contentOffset 计算得出</p>
+<p>3、ScrollView 在滚动过程中，WebView 和 TableView 的位置也是跟着改变的，这样就能保证 WebView 和 TableView 一直保持在可视的位置</p>
+<h3 id="3、简书"><a href="#3、简书" class="headerlink" title="3、简书"></a>3、简书</h3><p>在<a href="https://www.jianshu.com/p/42858f95ab43">《UIWebView与UITableView的嵌套方案》</a>一文中，作者是这样描述的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">将 webView 作为主体，其加载的 HTML 最后留一个空白 div，用于确定 tableView 的位置。tableView 加到 webView.scrollView 上，在监听到 </span><br><span class="line">webView.scrollView 的内容尺寸变化后，不断调整 tableView 的位置对应于该空白 div 的位置，同时将该 div 的尺寸设置为 tableView 的尺寸。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>简书是将 TableView 添加到 WebView 的 ScrollView 上，然后通过 UIPanGestureRecognizer 和 UIDynamicAnimator 模拟滚动产生偏移量来驱动 TableView 滑动。但是需要添加空白 div，预留 TableView 的位置，需要控制的逻辑比较复杂、麻烦，作者自己也说了。</p>
+<h3 id="4、腾讯新闻"><a href="#4、腾讯新闻" class="headerlink" title="4、腾讯新闻"></a>4、腾讯新闻</h3><p>腾讯新闻的实现方案和今日头条的差不多，只是 ScrollView 下比今日头条添加了更多的 SubView，当然如果理清这个方案的基本思路，就不算很复杂。</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/tx.png" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看了几款主流新闻资讯客户端资讯页的实现方案，从业务需求上来说，今日头条和腾讯新闻的实现方案是最为灵活的。</p>
+<p><strong>实现过程大体如下：</strong></p>
+<p>其实大概的方法在上面已经分析过，现在通过数学的方法精确的说明一下。在我们资讯详情页中，使用WebView渲染网页内容，使用TableView渲染“相关推荐”和“资讯评论”。最外层是一个ScrollView，WebView和TableView平铺在这个ScrollView中。</p>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/webI.png" alt></p>
+<h3 id="ScrollView-的-ContentSize"><a href="#ScrollView-的-ContentSize" class="headerlink" title="ScrollView 的 ContentSize"></a>ScrollView 的 ContentSize</h3><p>由于ScrollView用来滚动视图，ScrollView可以滚动到所有渲染内容，所以ScrollView的contentSize.height可通过以下公式计算（简单来说ScrollView的ContentSizeHeight是WebView和TableView的ContentSize之和）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ScrollView.contentSize.height &#x3D; WebView.contentSize.height + TableView.contentSize.height</span><br></pre></td></tr></table></figure>
+<h3 id="ScrollView-的-ContentOffset"><a href="#ScrollView-的-ContentOffset" class="headerlink" title="ScrollView 的 ContentOffset"></a>ScrollView 的 ContentOffset</h3><p>单个控件来看：</p>
+<p>1、WebView的ContentOffset.y取值范围是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 ~ (WebView.contentSize.height - WebView.height)</span><br></pre></td></tr></table></figure>
+<p>2、TableView的ContentOffset.y取值范围是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 ~ (TableView.contentSize.height - TableView.Height)</span><br></pre></td></tr></table></figure>
+<p>3、将 WebView 放在 ScrollView 上来看，WebView 可滚动范围，即 ScrollView.contentOffset.y 取值范围：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 ~ (WebView.contentOffset.y - WebView.height)</span><br></pre></td></tr></table></figure>
+<p>4、将 TableView 放在 ScrollView 上来看，TableView 可滚动范围，即 ScrollView.contentOffset.y 取值范围：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(ScrollView.contentSize.height - TableView.contentSize.Height) ~ (ScrollView.contentSize.height - TableView.height)</span><br></pre></td></tr></table></figure>
+<p>也就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(WebView.contentSize.height) ~ （WebView.contentSize.height + TableView.ContentSize.height - TableView.height)</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/web2.png" alt></p>
+<p>可以看出ScrollView.contentSzie.height将被分为6个的区间段</p>
+<h3 id="WebView-的-Top-和-TableView-的-Top"><a href="#WebView-的-Top-和-TableView-的-Top" class="headerlink" title="WebView 的 Top 和 TableView 的 Top"></a>WebView 的 Top 和 TableView 的 Top</h3><p>由于 WebView 和 TableView 没有完全展开，所以 WebView 和 TableView 需要动态改变它们的 Top 值（frame.origin.y），才能使 WebView 处于ScrollView 的可视位置。</p>
+<p>所以我们需要在 2 区间改变 WebView.top, 让 WebView 看起来和相对于 ScrollView 可视位置不变（这个时候 WebView 的 ContentOffset.y 是根据ScrollView 的 contentOffset.y 决定的），在2区间段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WebView.contentOffset.y &#x3D; ScrollView.contentOffset.y</span><br></pre></td></tr></table></figure>
+<p>同样需要在 4 区间段改变 TableView.Top 使 TableView 看起来相对于 ScrollView 可视位置不变。在 4 区间段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TableView.contentOffset.y &#x3D; ScrollView.contentOffset.y - WebView.height</span><br></pre></td></tr></table></figure>
+<h3 id="WebView-的-Height-和-TableView-的-Height"><a href="#WebView-的-Height-和-TableView-的-Height" class="headerlink" title="WebView 的 Height 和 TableView 的 Height"></a>WebView 的 Height 和 TableView 的 Height</h3><p>从上图我们可以看到在 2 和 4 区间段 WebView 和 TableView 分别要发生滚动。因为 TableView 在 WebView 正下方，如果 WebView.height 小于ScrollView.height ，那么在这个区间段下我们能够同时看到 WebView 和 TableView，因为 WebView 正在滚动，TableView 未发生滚动，看起来会十分诡异，在 4区间段情况也是一样的。</p>
+<ul>
+<li>所以WebView的height在 其contentSize 大于scrollView.height时：WebView.height = scrollView.height即可；</li>
+<li>TableViewView的height在 其contentSize 大于scrollView.height时：TableViewView.height = scrollView.height；</li>
+<li>WebView的height在 其contentSize 小于于scrollView.height时：WebView.height = WebView.contentSize.height;</li>
+<li>TableViewView的height在 其contentSize 小于scrollView.height时：TableViewView.height = TableViewView.contentSize.height;</li>
+</ul>
+<h2 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h2><p>主要代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UtWebWithTableViewVC.h&quot;</span><br><span class="line">#import &lt;WebKit&#x2F;WebKit.h&gt;</span><br><span class="line">#import &quot;UIView+UtDimensions.h&quot;</span><br><span class="line"></span><br><span class="line">@interface UtWebWithTableViewVC () &lt;UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, WKNavigationDelegate&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) WKWebView *webView;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) UITableView *tableView;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) UIScrollView *containerScrollView;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) UIView *contentView;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation UtWebWithTableViewVC &#123;</span><br><span class="line">    CGFloat _lastWebViewContentHeight;</span><br><span class="line">    CGFloat _lastTableViewContentHeight;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    self.title &#x3D; @&quot;WebView和TablView混合使用&quot;;</span><br><span class="line">    [self initValue];</span><br><span class="line">    [self initView];</span><br><span class="line"></span><br><span class="line">    NSString *path &#x3D; @&quot;https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;f31e39d3ce41&quot;;</span><br><span class="line">    NSMutableURLRequest *request &#x3D; [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:path]];</span><br><span class="line">    request.cachePolicy &#x3D; NSURLRequestReloadIgnoringCacheData;</span><br><span class="line">    [self.webView loadRequest:request];</span><br><span class="line">    [self addObservers];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)didReceiveMemoryWarning &#123;</span><br><span class="line">    [super didReceiveMemoryWarning];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)initValue &#123;</span><br><span class="line">    _lastWebViewContentHeight &#x3D; 0;</span><br><span class="line">    _lastTableViewContentHeight &#x3D; 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)initView &#123;</span><br><span class="line"></span><br><span class="line">    [self.contentView addSubview:self.webView];</span><br><span class="line">    [self.contentView addSubview:self.tableView];</span><br><span class="line"></span><br><span class="line">    [self.view addSubview:self.containerScrollView];</span><br><span class="line">    [self.containerScrollView addSubview:self.contentView];</span><br><span class="line"></span><br><span class="line">    self.contentView.frame &#x3D; CGRectMake(0, 0, self.view.width, self.view.height * 2);</span><br><span class="line">    self.webView.top &#x3D; 0;</span><br><span class="line">    self.webView.height &#x3D; self.view.height;</span><br><span class="line">    self.tableView.top &#x3D; self.webView.bottom;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - Observers</span><br><span class="line"></span><br><span class="line">- (void)addObservers &#123;</span><br><span class="line">    [self.webView addObserver:self forKeyPath:@&quot;scrollView.contentSize&quot; options:NSKeyValueObservingOptionNew context:nil];</span><br><span class="line">    [self.tableView addObserver:self forKeyPath:@&quot;contentSize&quot; options:NSKeyValueObservingOptionNew context:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)removeObservers &#123;</span><br><span class="line">    [self.webView removeObserver:self forKeyPath:@&quot;scrollView.contentSize&quot;];</span><br><span class="line">    [self.tableView removeObserver:self forKeyPath:@&quot;contentSize&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey, id&gt; *)change context:(void *)context &#123;</span><br><span class="line">    if (object &#x3D;&#x3D; _webView) &#123;</span><br><span class="line">        if ([keyPath isEqualToString:@&quot;scrollView.contentSize&quot;]) &#123;</span><br><span class="line">            [self updateContainerScrollViewContentSize:0 webViewContentHeight:0];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else if (object &#x3D;&#x3D; _tableView) &#123;</span><br><span class="line">        if ([keyPath isEqualToString:@&quot;contentSize&quot;]) &#123;</span><br><span class="line">            [self updateContainerScrollViewContentSize:0 webViewContentHeight:0];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)updateContainerScrollViewContentSize:(NSInteger)flag webViewContentHeight:(CGFloat)inWebViewContentHeight &#123;</span><br><span class="line"></span><br><span class="line">    CGFloat webViewContentHeight &#x3D; flag &#x3D;&#x3D; 1 ? inWebViewContentHeight : self.webView.scrollView.contentSize.height;</span><br><span class="line">    CGFloat tableViewContentHeight &#x3D; self.tableView.contentSize.height;</span><br><span class="line"></span><br><span class="line">    if (webViewContentHeight &#x3D;&#x3D; _lastWebViewContentHeight &amp;&amp; tableViewContentHeight &#x3D;&#x3D; _lastTableViewContentHeight) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _lastWebViewContentHeight &#x3D; webViewContentHeight;</span><br><span class="line">    _lastTableViewContentHeight &#x3D; tableViewContentHeight;</span><br><span class="line"></span><br><span class="line">    self.containerScrollView.contentSize &#x3D; CGSizeMake(self.view.width, webViewContentHeight + tableViewContentHeight);</span><br><span class="line"></span><br><span class="line">    CGFloat webViewHeight &#x3D; (webViewContentHeight &lt; self.view.height) ? webViewContentHeight : self.view.height;</span><br><span class="line">    CGFloat tableViewHeight &#x3D; tableViewContentHeight &lt; self.view.height ? tableViewContentHeight : self.view.height;</span><br><span class="line">    self.webView.height &#x3D; webViewHeight &lt;&#x3D; 0.1 ? self.view.height : webViewHeight;</span><br><span class="line">    self.contentView.height &#x3D; webViewHeight + tableViewHeight;</span><br><span class="line">    self.tableView.height &#x3D; tableViewHeight;</span><br><span class="line">    self.tableView.top &#x3D; self.webView.bottom;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - UIScrollViewDelegate</span><br><span class="line"></span><br><span class="line">- (void)scrollViewDidScroll:(UIScrollView *)scrollView &#123;</span><br><span class="line">    if (_containerScrollView !&#x3D; scrollView) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CGFloat offsetY &#x3D; scrollView.contentOffset.y;</span><br><span class="line"></span><br><span class="line">    CGFloat webViewHeight &#x3D; self.webView.height;</span><br><span class="line">    CGFloat tableViewHeight &#x3D; self.tableView.height;</span><br><span class="line"></span><br><span class="line">    CGFloat webViewContentHeight &#x3D; self.webView.scrollView.contentSize.height;</span><br><span class="line">    CGFloat tableViewContentHeight &#x3D; self.tableView.contentSize.height;</span><br><span class="line"></span><br><span class="line">    if (offsetY &lt;&#x3D; 0) &#123;</span><br><span class="line">        self.contentView.top &#x3D; 0;</span><br><span class="line">        self.webView.scrollView.contentOffset &#x3D; CGPointZero;</span><br><span class="line">        self.tableView.contentOffset &#x3D; CGPointZero;</span><br><span class="line">    &#125; else if (offsetY &lt; webViewContentHeight - webViewHeight) &#123;</span><br><span class="line">        self.webView.scrollView.contentOffset &#x3D; CGPointMake(0, offsetY);</span><br><span class="line">        self.contentView.top &#x3D; offsetY;</span><br><span class="line">    &#125; else if (offsetY &lt; webViewContentHeight) &#123;</span><br><span class="line">        self.tableView.contentOffset &#x3D; CGPointZero;</span><br><span class="line">        self.webView.scrollView.contentOffset &#x3D; CGPointMake(0, webViewContentHeight - webViewHeight);</span><br><span class="line">    &#125; else if (offsetY &lt; webViewContentHeight + tableViewContentHeight - tableViewHeight) &#123;</span><br><span class="line">        self.contentView.top &#x3D; offsetY - webViewHeight;</span><br><span class="line">        self.tableView.contentOffset &#x3D; CGPointMake(0, offsetY - webViewContentHeight);</span><br><span class="line">        self.webView.scrollView.contentOffset &#x3D; CGPointMake(0, webViewContentHeight - webViewHeight);</span><br><span class="line">    &#125; else if (offsetY &lt;&#x3D; webViewContentHeight + tableViewContentHeight) &#123;</span><br><span class="line">        self.webView.scrollView.contentOffset &#x3D; CGPointMake(0, webViewContentHeight - webViewHeight);</span><br><span class="line">        self.tableView.contentOffset &#x3D; CGPointMake(0, tableViewContentHeight - tableViewHeight);</span><br><span class="line">        self.contentView.top &#x3D; self.containerScrollView.contentSize.height - self.contentView.height;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        &#x2F;&#x2F;do nothing</span><br><span class="line">        NSLog(@&quot;do nothing&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - UITableViewDataSouce</span><br><span class="line"></span><br><span class="line">- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section &#123;</span><br><span class="line">    return 10;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line">    return 200;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line">    UITableViewCell *cell &#x3D; [tableView dequeueReusableCellWithIdentifier:@&quot;cell&quot;];</span><br><span class="line">    if (cell &#x3D;&#x3D; nil) &#123;</span><br><span class="line">        cell &#x3D; [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@&quot;cell&quot;];</span><br><span class="line">        cell.backgroundColor &#x3D; [UIColor orangeColor];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cell.textLabel.text &#x3D; @(indexPath.row).stringValue;</span><br><span class="line"></span><br><span class="line">    return cell;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - setter&amp;getter</span><br><span class="line"></span><br><span class="line">- (WKWebView *)webView &#123;</span><br><span class="line">    if (_webView &#x3D;&#x3D; nil) &#123;</span><br><span class="line">        WKWebViewConfiguration *configuration &#x3D; [[WKWebViewConfiguration alloc] init];</span><br><span class="line">        _webView &#x3D; [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];</span><br><span class="line">        _webView.scrollView.scrollEnabled &#x3D; NO;</span><br><span class="line">        _webView.navigationDelegate &#x3D; self;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return _webView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (UITableView *)tableView &#123;</span><br><span class="line">    if (_tableView &#x3D;&#x3D; nil) &#123;</span><br><span class="line">        _tableView &#x3D; [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];</span><br><span class="line">        _tableView.contentInset &#x3D; UIEdgeInsetsMake(0, 0, 0, 0);</span><br><span class="line">        _tableView.delegate &#x3D; self;</span><br><span class="line">        _tableView.dataSource &#x3D; self;</span><br><span class="line">        _tableView.tableFooterView &#x3D; [UIView new];</span><br><span class="line">        _tableView.scrollEnabled &#x3D; NO;</span><br><span class="line">    &#125;</span><br><span class="line">    return _tableView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (UIScrollView *)containerScrollView &#123;</span><br><span class="line">    if (_containerScrollView &#x3D;&#x3D; nil) &#123;</span><br><span class="line">        _containerScrollView &#x3D; [[UIScrollView alloc] initWithFrame:self.view.bounds];</span><br><span class="line">        _containerScrollView.delegate &#x3D; self;</span><br><span class="line">        _containerScrollView.alwaysBounceVertical &#x3D; YES;</span><br><span class="line">        _containerScrollView.backgroundColor &#x3D; [UIColor grayColor];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return _containerScrollView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (UIView *)contentView &#123;</span><br><span class="line">    if (_contentView &#x3D;&#x3D; nil) &#123;</span><br><span class="line">        _contentView &#x3D; [[UIView alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    return _contentView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - dealloc</span><br><span class="line"></span><br><span class="line">- (void)dealloc &#123;</span><br><span class="line">    [self removeObservers];</span><br><span class="line">    NSLog(@&quot;dealloc: %@&quot;, [self class]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>“UIView+UtDimensions.h” 这是一个 View 的 Frame 辅助分类，就是一个大众版本。</p>
+<p>文章连接：</p>
+<p><a href="https://www.jianshu.com/p/3721d736cf68">iOS资讯详情页实现—WebView和TableView混合使用</a></p>
+<p><a href="https://www.jianshu.com/p/42858f95ab43">UIWebView与UITableView的嵌套方案</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/30/ReactNative/React Native之热更新(react-native-pushy)/" rel="next" title="React Native之热更新(react-native-pushy)">
+                <i class="fa fa-chevron-left"></i> React Native之热更新(react-native-pushy)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/04/JS/JavaScript之Node版本管理/" rel="prev" title="JavaScript之Node版本管理">
+                JavaScript之Node版本管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png" alt="Eric Huang">
+            
+              <p class="site-author-name" itemprop="name">Eric Huang</p>
+              <p class="site-description motion-element" itemprop="description">~ 生活不止苟且，还有诗和远方，迎着朝阳前进，看风与雪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/huangzhifei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/chongzizizizizizi/home?leftnav=1" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#描述"><span class="nav-number">1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#业界主流App的实现方案"><span class="nav-number">2.</span> <span class="nav-text">业界主流App的实现方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、网易新闻"><span class="nav-number">2.1.</span> <span class="nav-text">1、网易新闻</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、今日头条"><span class="nav-number">2.2.</span> <span class="nav-text">2、今日头条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、简书"><span class="nav-number">2.3.</span> <span class="nav-text">3、简书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、腾讯新闻"><span class="nav-number">2.4.</span> <span class="nav-text">4、腾讯新闻</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ScrollView-的-ContentSize"><span class="nav-number">3.1.</span> <span class="nav-text">ScrollView 的 ContentSize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ScrollView-的-ContentOffset"><span class="nav-number">3.2.</span> <span class="nav-text">ScrollView 的 ContentOffset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebView-的-Top-和-TableView-的-Top"><span class="nav-number">3.3.</span> <span class="nav-text">WebView 的 Top 和 TableView 的 Top</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebView-的-Height-和-TableView-的-Height"><span class="nav-number">3.4.</span> <span class="nav-text">WebView 的 Height 和 TableView 的 Height</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上代码"><span class="nav-number">4.</span> <span class="nav-text">上代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric Huang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://huangzhifei.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://huangzhifei.github.io/2018/06/01/Objective-C/2018/iOS之资讯详情实现-WebView和TableView混合使用/';
+          this.page.identifier = '2018/06/01/Objective-C/2018/iOS之资讯详情实现-WebView和TableView混合使用/';
+          this.page.title = 'iOS之资讯详情实现-WebView和TableView混合使用';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://huangzhifei.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

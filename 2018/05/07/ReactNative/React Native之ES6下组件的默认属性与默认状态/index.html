@@ -1,37 +1,818 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="RN,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EricHuang's blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="网上大部分还是 ES5 的一些三方库，写法也是 ES5 的，下现我们列出 ES5 与 ES6 的对比写法。 属性(props)在ES5里，属性类型和默认属性分别通过propTypes成员和getDefaultProps方法来实现 12345678910111213141516171819var Video &amp;#x3D; React.createClass(&amp;#123;    getDefaultP">
+<meta name="keywords" content="RN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native之ES6下组件的默认属性与默认状态">
+<meta property="og:url" content="https://huangzhifei.github.io/2018/05/07/ReactNative/React Native之ES6下组件的默认属性与默认状态/index.html">
+<meta property="og:site_name" content="EricHuang&#39;s blog">
+<meta property="og:description" content="网上大部分还是 ES5 的一些三方库，写法也是 ES5 的，下现我们列出 ES5 与 ES6 的对比写法。 属性(props)在ES5里，属性类型和默认属性分别通过propTypes成员和getDefaultProps方法来实现 12345678910111213141516171819var Video &amp;#x3D; React.createClass(&amp;#123;    getDefaultP">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-05T02:55:03.372Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native之ES6下组件的默认属性与默认状态">
+<meta name="twitter:description" content="网上大部分还是 ES5 的一些三方库，写法也是 ES5 的，下现我们列出 ES5 与 ES6 的对比写法。 属性(props)在ES5里，属性类型和默认属性分别通过propTypes成员和getDefaultProps方法来实现 12345678910111213141516171819var Video &amp;#x3D; React.createClass(&amp;#123;    getDefaultP">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://huangzhifei.github.io/2018/05/07/ReactNative/React Native之ES6下组件的默认属性与默认状态/">
+
+
+
+
+
+  <title>React Native之ES6下组件的默认属性与默认状态 | EricHuang's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EricHuang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每一个不码代码的日子，都是对生命的辜负!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home // 首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user // 关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags // 标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th // 分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive // 归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2018/05/07/ReactNative/React Native之ES6下组件的默认属性与默认状态/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EricHuang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React Native之ES6下组件的默认属性与默认状态</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-07T14:49:29+08:00">
+                2018-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/07/ReactNative/React Native之ES6下组件的默认属性与默认状态/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/07/ReactNative/React Native之ES6下组件的默认属性与默认状态/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>网上大部分还是 ES5 的一些三方库，写法也是 ES5 的，下现我们列出 ES5 与 ES6 的对比写法。</p>
+<h3 id="属性-props"><a href="#属性-props" class="headerlink" title="属性(props)"></a>属性(props)</h3><p><strong>在ES5里，属性类型和默认属性分别通过propTypes成员和getDefaultProps方法来实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var Video &#x3D; React.createClass(&#123;</span><br><span class="line">    getDefaultProps: function() &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            autoPlay: false,</span><br><span class="line">            maxLoops: 10,</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    propTypes: &#123;</span><br><span class="line">        autoPlay: React.PropTypes.bool.isRequired,</span><br><span class="line">        maxLoops: React.PropTypes.number.isRequired,</span><br><span class="line">        posterFrameSrc: React.PropTypes.string.isRequired,</span><br><span class="line">        videoSrc: React.PropTypes.string.isRequired,</span><br><span class="line">    &#125;,</span><br><span class="line">    render: function() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View &#x2F;&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>在 ES6 里，可以统一使用 static 成员来实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;ES6</span><br><span class="line"></span><br><span class="line">import PropTypes from &#39;prop-types&#39;;</span><br><span class="line"></span><br><span class="line">class Video extends React.Component &#123;</span><br><span class="line">    static defaultProps &#x3D; &#123;</span><br><span class="line">        autoPlay: false,</span><br><span class="line">        maxLoops: 10,</span><br><span class="line">    &#125;;  &#x2F;&#x2F; 注意这里有分号</span><br><span class="line">    </span><br><span class="line">    static propTypes &#x3D; &#123;</span><br><span class="line">        autoPlay: PropTypes.bool.isRequired,</span><br><span class="line">        maxLoops: PropTypes.number.isRequired,</span><br><span class="line">        posterFrameSrc: PropTypes.string.isRequired,</span><br><span class="line">        videoSrc: PropTypes.string.isRequired,</span><br><span class="line">    &#125;;  &#x2F;&#x2F; 注意这里有分号</span><br><span class="line">    </span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View &#x2F;&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125; &#x2F;&#x2F; 注意这里既没有分号也没有逗号</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：React.PropTypes 在高版本里面已经被移动到 prop-types 这个 lib 里面了，以后我们使用的时候需要单独导入一下。</p>
+<p>常用的有以下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"># 为任何类型</span><br><span class="line">PropTypes.any</span><br><span class="line"></span><br><span class="line"># 为 React 元素</span><br><span class="line">PropTypes.element</span><br><span class="line"></span><br><span class="line"># 数组类型</span><br><span class="line">PropTypes.array</span><br><span class="line"></span><br><span class="line"># 布尔类型</span><br><span class="line">PropTypes.bool</span><br><span class="line"></span><br><span class="line"># 函数类型</span><br><span class="line">PropTypes.func</span><br><span class="line"></span><br><span class="line"># 数值类型</span><br><span class="line">PropTypes.number</span><br><span class="line"></span><br><span class="line"># 对象类型</span><br><span class="line">PropTypes.object</span><br><span class="line"></span><br><span class="line"># 字符串类型</span><br><span class="line">PropTypes.string</span><br><span class="line"></span><br><span class="line"># 为可渲染的节点</span><br><span class="line">PropTypes.node</span><br><span class="line"></span><br><span class="line"># 为几个特定的值</span><br><span class="line">PropTypes.oneOf([&#39;value1&#39;, &#39;value2&#39;])</span><br><span class="line"></span><br><span class="line"># 为某个指定类的实例</span><br><span class="line">PropTypes.instanceOf(NameOfClass)</span><br><span class="line"></span><br><span class="line"># 为指定类型的数组</span><br><span class="line">PropTypes.arrayOf(PropTypes.string)</span><br><span class="line"></span><br><span class="line"># 为几个指定的类型中的一个</span><br><span class="line">PropTypes.oneOfType([</span><br><span class="line">	PropTypes.object,</span><br><span class="line">	PropTypes.string</span><br><span class="line">])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="状态-state"><a href="#状态-state" class="headerlink" title="状态(state)"></a>状态(state)</h3><p>ES5下写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var Video &#x3D; React.createClass(&#123;</span><br><span class="line">    getInitialState: function() &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            loopsRemaining: this.props.maxLoops,</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>ES6下写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;ES6</span><br><span class="line">class Video extends React.Component &#123;</span><br><span class="line">    state &#x3D; &#123;</span><br><span class="line">        loopsRemaining: this.props.maxLoops,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在ES6下，我们推荐更易理解的方式，我们在构造函数初始化：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;ES6</span><br><span class="line">class Video extends React.Component &#123;</span><br><span class="line">    constructor(props)&#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.state &#x3D; &#123;</span><br><span class="line">            loopsRemaining: this.props.maxLoops,</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RN/" rel="tag"># RN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/02/JS/JavaScript之ES6模板字符串/" rel="next" title="JavaScript之ES6模板字符串">
+                <i class="fa fa-chevron-left"></i> JavaScript之ES6模板字符串
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/07/ReactNative/React Native之ES6带的好处/" rel="prev" title="React Native之ES6带的好处">
+                React Native之ES6带的好处 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png" alt="Eric Huang">
+            
+              <p class="site-author-name" itemprop="name">Eric Huang</p>
+              <p class="site-description motion-element" itemprop="description">~ 生活不止苟且，还有诗和远方，迎着朝阳前进，看风与雪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/huangzhifei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/chongzizizizizizi/home?leftnav=1" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性-props"><span class="nav-number">1.</span> <span class="nav-text">属性(props)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态-state"><span class="nav-number">2.</span> <span class="nav-text">状态(state)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric Huang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://huangzhifei.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://huangzhifei.github.io/2018/05/07/ReactNative/React Native之ES6下组件的默认属性与默认状态/';
+          this.page.identifier = '2018/05/07/ReactNative/React Native之ES6下组件的默认属性与默认状态/';
+          this.page.title = 'React Native之ES6下组件的默认属性与默认状态';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://huangzhifei.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
