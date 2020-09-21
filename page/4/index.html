@@ -264,6 +264,165 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2018/05/21/ReactNative/React Native之获取组件位置与大小/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EricHuang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/21/ReactNative/React Native之获取组件位置与大小/" itemprop="url">React Native之获取组件位置与大小</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-21T17:48:10+08:00">
+                2018-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/21/ReactNative/React Native之获取组件位置与大小/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/21/ReactNative/React Native之获取组件位置与大小/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          在 React Native 的页面布局中，有时候需要获取元素的大小和位置，下面从网上找了几个方法，以备不时之需。
+设备屏宽高12import &#123;Dimensions&#125; from &apos;react-native&apos;;var &#123;height, width&#
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/21/ReactNative/React Native之获取组件位置与大小/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2018/05/21/ReactNative/React Native之Modal组件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -529,7 +688,7 @@
           
           React Native 有两种方式使用全局变量
 通过导入导出文件的方式新建立单独的一个 js 文件
-1234export const object &#x3D; &#123;	website: &#39;http:&#x2F;&#x2F;www.baidu.com&#39;,	name: &#39
+1234export const object = &#123;	website: &apos;http://www.baidu.com&apos;,	name: &apos;百度&apos;&#1
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1174,7 +1333,7 @@ text 的文字如
           
           内联样式从语法上来看，内联样式是 React Native 中编写组件样式最简单的一种方法，但是他不是最佳的，我们应该尽量避免使用，内联样式对象会在每一个渲染周期都被重新创建。
 样例：
-1&lt;Text style &#x3D; &#123;&#123;fontSize: 12&#125;&#12
+1&lt;Text style = &#123;&#123;fontSize: 12&#125;&#125; /&
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1653,171 +1812,11 @@ text 的文字如
         
           
           模板字符串ES6 中引入了一种新型的字符串语法，可以在字符串文本中内嵌表示式的字符串，看下面一段例子：
-123456var name &#x3D; &#39;姓名&#39;;var desc &#x3D; &#39;姓名是一种描述&#39;;var html &#x3D; (name, desc) 
+123456var name = &apos;姓名&apos;;var desc = &apos;姓名是一种描述&apos;;var html = (name, desc) &#123;    v
           ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/05/02/JS/JavaScript之ES6模板字符串/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2018/04/28/Objective-C/2018/iOS之TableView嵌套TableView处理手势/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Eric Huang">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EricHuang's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/28/Objective-C/2018/iOS之TableView嵌套TableView处理手势/" itemprop="url">iOS之TableView嵌套TableView处理手势</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-28T10:30:02+08:00">
-                2018-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS技术/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS技术</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/28/Objective-C/2018/iOS之TableView嵌套TableView处理手势/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/28/Objective-C/2018/iOS之TableView嵌套TableView处理手势/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          场景外层一个 UITableView，内部三个 Tab，即一个横向的 UIScrollView，里面包含三个 UITableView
-
-详解1、大体思路要使用内层的 UITableView（TAB 栏里面）和外层的 UITableView 同时响应用户的手势滑动事件，当用户从页面顶端从下往上滑动到 
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/28/Objective-C/2018/iOS之TableView嵌套TableView处理手势/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1907,7 +1906,7 @@ text 的文字如
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

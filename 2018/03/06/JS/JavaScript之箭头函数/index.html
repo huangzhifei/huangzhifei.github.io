@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="箭头函数不只是语法上的简洁，他也影响了 this 的作用域，箭头函数内部的 this 是词法作用域，由上下文确定！ 语法常规函数语法定义如下： 1234function funcName(params) &amp;#123;   return params + 2;&amp;#125;funcName(2); 打印：4 我们来使用 箭头函数 改写上面的写法： 12var funcName &amp;#x3D; (para">
+<meta name="description" content="箭头函数不只是语法上的简洁，他也影响了 this 的作用域，箭头函数内部的 this 是词法作用域，由上下文确定！ 语法常规函数语法定义如下： 1234function funcName(params) &amp;#123;   return params + 2;&amp;#125;funcName(2); 打印：4 我们来使用 箭头函数 改写上面的写法： 12var funcName = (params) =">
 <meta name="keywords" content="JS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript之箭头函数">
 <meta property="og:url" content="https://huangzhifei.github.io/2018/03/06/JS/JavaScript之箭头函数/index.html">
 <meta property="og:site_name" content="EricHuang&#39;s blog">
-<meta property="og:description" content="箭头函数不只是语法上的简洁，他也影响了 this 的作用域，箭头函数内部的 this 是词法作用域，由上下文确定！ 语法常规函数语法定义如下： 1234function funcName(params) &amp;#123;   return params + 2;&amp;#125;funcName(2); 打印：4 我们来使用 箭头函数 改写上面的写法： 12var funcName &amp;#x3D; (para">
+<meta property="og:description" content="箭头函数不只是语法上的简洁，他也影响了 this 的作用域，箭头函数内部的 this 是词法作用域，由上下文确定！ 语法常规函数语法定义如下： 1234function funcName(params) &amp;#123;   return params + 2;&amp;#125;funcName(2); 打印：4 我们来使用 箭头函数 改写上面的写法： 12var funcName = (params) =">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-01-05T02:55:03.360Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript之箭头函数">
-<meta name="twitter:description" content="箭头函数不只是语法上的简洁，他也影响了 this 的作用域，箭头函数内部的 this 是词法作用域，由上下文确定！ 语法常规函数语法定义如下： 1234function funcName(params) &amp;#123;   return params + 2;&amp;#125;funcName(2); 打印：4 我们来使用 箭头函数 改写上面的写法： 12var funcName &amp;#x3D; (para">
+<meta name="twitter:description" content="箭头函数不只是语法上的简洁，他也影响了 this 的作用域，箭头函数内部的 this 是词法作用域，由上下文确定！ 语法常规函数语法定义如下： 1234function funcName(params) &amp;#123;   return params + 2;&amp;#125;funcName(2); 打印：4 我们来使用 箭头函数 改写上面的写法： 12var funcName = (params) =">
 
 
 
@@ -369,24 +369,24 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function funcName(params) &#123;</span><br><span class="line">   return params + 2;</span><br><span class="line">&#125;</span><br><span class="line">funcName(2);</span><br></pre></td></tr></table></figure>
 <p>打印：4</p>
 <p>我们来使用 箭头函数 改写上面的写法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var funcName &#x3D; (params) &#x3D;&gt; params + 2;</span><br><span class="line">funcName(2);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var funcName = (params) =&gt; params + 2;</span><br><span class="line">funcName(2);</span><br></pre></td></tr></table></figure>
 <p>有没有觉得很简洁，我们来深入了解箭头函数的几种语法：</p>
-<h3 id="基本写法"><a href="#基本写法" class="headerlink" title="基本写法"></a>基本写法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(params) &#x3D;&gt; &#123; statements &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="没有参数，简化"><a href="#没有参数，简化" class="headerlink" title="没有参数，简化"></a>没有参数，简化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() &#x3D;&gt; &#123; statements &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="只有一个参数，简化"><a href="#只有一个参数，简化" class="headerlink" title="只有一个参数，简化"></a>只有一个参数，简化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">params &#x3D;&gt; &#123; statements &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="返回值只有一个表达式，简化"><a href="#返回值只有一个表达式，简化" class="headerlink" title="返回值只有一个表达式，简化"></a>返回值只有一个表达式，简化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">params &#x3D;&gt; statements </span><br></pre></td></tr></table></figure>
+<h3 id="基本写法"><a href="#基本写法" class="headerlink" title="基本写法"></a>基本写法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(params) =&gt; &#123; statements &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="没有参数，简化"><a href="#没有参数，简化" class="headerlink" title="没有参数，简化"></a>没有参数，简化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() =&gt; &#123; statements &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="只有一个参数，简化"><a href="#只有一个参数，简化" class="headerlink" title="只有一个参数，简化"></a>只有一个参数，简化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">params =&gt; &#123; statements &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="返回值只有一个表达式，简化"><a href="#返回值只有一个表达式，简化" class="headerlink" title="返回值只有一个表达式，简化"></a>返回值只有一个表达式，简化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">params =&gt; statements</span><br></pre></td></tr></table></figure>
 <h3 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h3><p>该有小括号的我们还是加上小括号，该有大括号的，我们也都加上大括号，严格要求，也是为了方便观看！</p>
 <h2 id="this-的绑定"><a href="#this-的绑定" class="headerlink" title="this 的绑定"></a>this 的绑定</h2><p>在箭头函数出现之前，每个新定义的函数都有它自己的 this值，和一般的函数不同，箭头函数不会绑定 this。 或则说箭头函数不会改变 this 本来的绑定，箭头函数内部的 this 是词法作用域，由上下文确定。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  this.num &#x3D; 0;</span><br><span class="line">&#125;</span><br><span class="line">var a &#x3D; new Counter();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  this.num = 0;</span><br><span class="line">&#125;</span><br><span class="line">var a = new Counter();</span><br></pre></td></tr></table></figure>
 <p>因为使用了关键字new构造，Count()函数中的this绑定到一个新的对象，并且赋值给a。通过console.log打印a.num，会输出0。</p>
 <p>我们在来看下一个例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  this.num &#x3D; 0;</span><br><span class="line">  this.timer &#x3D; setInterval(function add() &#123;</span><br><span class="line">    this.num++;</span><br><span class="line">    console.log(this.num);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var b &#x3D; new Counter();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  this.num = 0;</span><br><span class="line">  this.timer = setInterval(function add() &#123;</span><br><span class="line">    this.num++;</span><br><span class="line">    console.log(this.num);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var b = new Counter();</span><br></pre></td></tr></table></figure>
 <p>也许我们理所当然的认为会累加输出，结果如下：<br>// NaN<br>// NaN<br>// NaN<br>// NaN<br>// …<br>问题出在哪？一看就像是没有初始或没有此变量的样子，那肯定是 this 对象不对。</p>
 <p>我们看函数 setInterval() ，他没有被某个声明的对象调用，也没有使用 new 关键字，更没有使用 bind、call 和 apply 等去关联 this，我们在他里面可以增加一行打印 this 的语句 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(this)</span><br></pre></td></tr></table></figure>
 <p>你会发现，整个 window 对象被打印出来了，那就说明函数里面的 this.num 绑定到 window 对象的 num，但是 window.num 并没有定义。</p>
 <p>如何解决？使用箭头函数！使用箭头函数就不会导致this被绑定到全局对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  this.num &#x3D; 0;</span><br><span class="line">  this.timer &#x3D; setInterval(() &#x3D;&gt; &#123;</span><br><span class="line">    this.num++;</span><br><span class="line">    console.log(this.num);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">var b &#x3D; new Counter();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  this.num = 0;</span><br><span class="line">  this.timer = setInterval(() =&gt; &#123;</span><br><span class="line">    this.num++;</span><br><span class="line">    console.log(this.num);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">var b = new Counter();</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -518,7 +518,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

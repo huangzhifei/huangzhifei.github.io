@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="React Native 有两种方式使用全局变量 通过导入导出文件的方式新建立单独的一个 js 文件 1234export const object &amp;#x3D; &amp;#123;	website: &amp;#39;http:&amp;#x2F;&amp;#x2F;www.baidu.com&amp;#39;,	name: &amp;#39;百度&amp;#39;&amp;#125; 然后在需要用到的时候导入文件 1234import constants">
+<meta name="description" content="React Native 有两种方式使用全局变量 通过导入导出文件的方式新建立单独的一个 js 文件 1234export const object = &amp;#123;	website: &amp;apos;http://www.baidu.com&amp;apos;,	name: &amp;apos;百度&amp;apos;&amp;#125; 然后在需要用到的时候导入文件 1234import constants from &amp;apos">
 <meta name="keywords" content="RN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Native之全局变量">
 <meta property="og:url" content="https://huangzhifei.github.io/2018/05/18/ReactNative/React Native之全局变量/index.html">
 <meta property="og:site_name" content="EricHuang&#39;s blog">
-<meta property="og:description" content="React Native 有两种方式使用全局变量 通过导入导出文件的方式新建立单独的一个 js 文件 1234export const object &amp;#x3D; &amp;#123;	website: &amp;#39;http:&amp;#x2F;&amp;#x2F;www.baidu.com&amp;#39;,	name: &amp;#39;百度&amp;#39;&amp;#125; 然后在需要用到的时候导入文件 1234import constants">
+<meta property="og:description" content="React Native 有两种方式使用全局变量 通过导入导出文件的方式新建立单独的一个 js 文件 1234export const object = &amp;#123;	website: &amp;apos;http://www.baidu.com&amp;apos;,	name: &amp;apos;百度&amp;apos;&amp;#125; 然后在需要用到的时候导入文件 1234import constants from &amp;apos">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-01-05T02:55:03.374Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Native之全局变量">
-<meta name="twitter:description" content="React Native 有两种方式使用全局变量 通过导入导出文件的方式新建立单独的一个 js 文件 1234export const object &amp;#x3D; &amp;#123;	website: &amp;#39;http:&amp;#x2F;&amp;#x2F;www.baidu.com&amp;#39;,	name: &amp;#39;百度&amp;#39;&amp;#125; 然后在需要用到的时候导入文件 1234import constants">
+<meta name="twitter:description" content="React Native 有两种方式使用全局变量 通过导入导出文件的方式新建立单独的一个 js 文件 1234export const object = &amp;#123;	website: &amp;apos;http://www.baidu.com&amp;apos;,	name: &amp;apos;百度&amp;apos;&amp;#125; 然后在需要用到的时候导入文件 1234import constants from &amp;apos">
 
 
 
@@ -366,15 +366,15 @@
       
         <p>React Native 有两种方式使用全局变量</p>
 <h2 id="通过导入导出文件的方式"><a href="#通过导入导出文件的方式" class="headerlink" title="通过导入导出文件的方式"></a>通过导入导出文件的方式</h2><p>新建立单独的一个 js 文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export const object &#x3D; &#123;</span><br><span class="line">	website: &#39;http:&#x2F;&#x2F;www.baidu.com&#39;,</span><br><span class="line">	name: &#39;百度&#39;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export const object = &#123;</span><br><span class="line">	website: &apos;http://www.baidu.com&apos;,</span><br><span class="line">	name: &apos;百度&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然后在需要用到的时候导入文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import constants from &#39;.&#x2F;xxxx.js&#39;;</span><br><span class="line">&lt;Text&gt;</span><br><span class="line">	&#123;constants.name&#125;</span><br><span class="line">&lt;&#x2F;Text&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import constants from &apos;./xxxx.js&apos;;</span><br><span class="line">&lt;Text&gt;</span><br><span class="line">	&#123;constants.name&#125;</span><br><span class="line">&lt;/Text&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="通过声明全局变量的方式"><a href="#通过声明全局变量的方式" class="headerlink" title="通过声明全局变量的方式"></a>通过声明全局变量的方式</h2><p>一定是先声明，后调用的顺序</p>
 <p>创建一个单独的 js 文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var storage &#x3D; &#123;</span><br><span class="line">	size: 1000,</span><br><span class="line">	defaultExpires: 1000 * 3600</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">global.storage &#x3D; storage;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var storage = &#123;</span><br><span class="line">	size: 1000,</span><br><span class="line">	defaultExpires: 1000 * 3600</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">global.storage = storage;</span><br></pre></td></tr></table></figure>
 <p>使用方法：在入口文件处一次调用（如：index.ios.js），但是这样要写两遍（还有 index.android.js），所以最好在这两个文件都要调用的地方调用一次，比如都要调用 setup 来加载主页。</p>
 <p>调用的时候只需要引入就可以了，这样就能全局使用了，并且不需要from才能保证这个文件不是一个孤立的没运行的文件，还得保证import的顺序，即必须在其他使用storage的组件之前import</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#39;.&#x2F;xxx.js&#39;；</span><br><span class="line"></span><br><span class="line">#其他文件使用</span><br><span class="line"></span><br><span class="line">&lt;Text&gt;&#123;global.storage.size&#125;&lt;&#x2F;Text&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import &apos;./xxx.js&apos;；</span><br><span class="line"></span><br><span class="line">#其他文件使用</span><br><span class="line"></span><br><span class="line">&lt;Text&gt;&#123;global.storage.size&#125;&lt;/Text&gt;</span><br></pre></td></tr></table></figure>
 <p>最常用的场景的是封装一个全局的持久化数据的类，比较出名的就是 react-native-storage 封装了 AsyncStorage ，大家可以去他的实现与使用。</p>
 
       
@@ -507,7 +507,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

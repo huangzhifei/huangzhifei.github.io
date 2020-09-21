@@ -368,10 +368,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef id (*IMP)(id, SEL, ...);</span><br></pre></td></tr></table></figure>
 <p>当一个 c 函数，拥有正确的参数顺序，那么这个 c 函数就可以当做任意的一个已存在或新的方法的 IMP.</p>
 <p>看下在的例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">if([obj respondsToSelector:NSSelectorFromString(@&quot;xxtest:&quot;)])&#123;</span><br><span class="line">        SEL selector &#x3D; NSSelectorFromString(@&quot;xxtest:&quot;);</span><br><span class="line">        IMP imp &#x3D; [shareData methodForSelector:selector];</span><br><span class="line">        void (*func)(id, SEL, NSString *) &#x3D; (void *)imp;</span><br><span class="line">        func(obj, selector, parameter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">if([obj respondsToSelector:NSSelectorFromString(@&quot;xxtest:&quot;)])&#123;</span><br><span class="line">        SEL selector = NSSelectorFromString(@&quot;xxtest:&quot;);</span><br><span class="line">        IMP imp = [shareData methodForSelector:selector];</span><br><span class="line">        void (*func)(id, SEL, NSString *) = (void *)imp;</span><br><span class="line">        func(obj, selector, parameter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们在 obj 这个对象的类中有一个叫 xxxtest: 的方法，可以是私有的方法，通过这种方式传入参数，调用此方法。</p>
 <p>当然如果嫌麻烦就使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if([obj respondsToSelector:NSSelectorFromString(@&quot;xxtest:&quot;)])&#123;</span><br><span class="line">        SEL selector &#x3D; NSSelectorFromString(@&quot;xxtest:&quot;);</span><br><span class="line">        [obj performSelector:selector withObject:@&quot;&quot;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if([obj respondsToSelector:NSSelectorFromString(@&quot;xxtest:&quot;)])&#123;</span><br><span class="line">        SEL selector = NSSelectorFromString(@&quot;xxtest:&quot;);</span><br><span class="line">        [obj performSelector:selector withObject:@&quot;&quot;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>不过这个方法参数受限于 NSObject 类型，也就是 withObject 只能是 id 类型，对于要传 int 还要转一下，也蛋疼，所以不如用第一种方法！</p>
 
       
@@ -495,7 +495,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="在 React Native 的页面布局中，有时候需要获取元素的大小和位置，下面从网上找了几个方法，以备不时之需。 设备屏宽高12import &amp;#123;Dimensions&amp;#125; from &amp;#39;react-native&amp;#39;;var &amp;#123;height, width&amp;#125; &amp;#x3D; Dimensions.get(&amp;#39;window&amp;#39;); 组件位置与大">
+<meta name="description" content="在 React Native 的页面布局中，有时候需要获取元素的大小和位置，下面从网上找了几个方法，以备不时之需。 设备屏宽高12import &amp;#123;Dimensions&amp;#125; from &amp;apos;react-native&amp;apos;;var &amp;#123;height, width&amp;#125; = Dimensions.get(&amp;apos;window&amp;apos;); 组件位置与大小">
 <meta name="keywords" content="RN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Native之获取组件位置与大小">
 <meta property="og:url" content="https://huangzhifei.github.io/2018/05/21/ReactNative/React Native之获取组件位置与大小/index.html">
 <meta property="og:site_name" content="EricHuang&#39;s blog">
-<meta property="og:description" content="在 React Native 的页面布局中，有时候需要获取元素的大小和位置，下面从网上找了几个方法，以备不时之需。 设备屏宽高12import &amp;#123;Dimensions&amp;#125; from &amp;#39;react-native&amp;#39;;var &amp;#123;height, width&amp;#125; &amp;#x3D; Dimensions.get(&amp;#39;window&amp;#39;); 组件位置与大">
+<meta property="og:description" content="在 React Native 的页面布局中，有时候需要获取元素的大小和位置，下面从网上找了几个方法，以备不时之需。 设备屏宽高12import &amp;#123;Dimensions&amp;#125; from &amp;apos;react-native&amp;apos;;var &amp;#123;height, width&amp;#125; = Dimensions.get(&amp;apos;window&amp;apos;); 组件位置与大小">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-01-05T02:55:03.376Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Native之获取组件位置与大小">
-<meta name="twitter:description" content="在 React Native 的页面布局中，有时候需要获取元素的大小和位置，下面从网上找了几个方法，以备不时之需。 设备屏宽高12import &amp;#123;Dimensions&amp;#125; from &amp;#39;react-native&amp;#39;;var &amp;#123;height, width&amp;#125; &amp;#x3D; Dimensions.get(&amp;#39;window&amp;#39;); 组件位置与大">
+<meta name="twitter:description" content="在 React Native 的页面布局中，有时候需要获取元素的大小和位置，下面从网上找了几个方法，以备不时之需。 设备屏宽高12import &amp;#123;Dimensions&amp;#125; from &amp;apos;react-native&amp;apos;;var &amp;#123;height, width&amp;#125; = Dimensions.get(&amp;apos;window&amp;apos;); 组件位置与大小">
 
 
 
@@ -365,25 +365,25 @@
 
       
         <p>在 React Native 的页面布局中，有时候需要获取元素的大小和位置，下面从网上找了几个方法，以备不时之需。</p>
-<h3 id="设备屏宽高"><a href="#设备屏宽高" class="headerlink" title="设备屏宽高"></a>设备屏宽高</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import &#123;Dimensions&#125; from &#39;react-native&#39;;</span><br><span class="line">var &#123;height, width&#125; &#x3D; Dimensions.get(&#39;window&#39;);</span><br></pre></td></tr></table></figure>
+<h3 id="设备屏宽高"><a href="#设备屏宽高" class="headerlink" title="设备屏宽高"></a>设备屏宽高</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import &#123;Dimensions&#125; from &apos;react-native&apos;;</span><br><span class="line">var &#123;height, width&#125; = Dimensions.get(&apos;window&apos;);</span><br></pre></td></tr></table></figure>
 <h3 id="组件位置与大小"><a href="#组件位置与大小" class="headerlink" title="组件位置与大小"></a>组件位置与大小</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p>onLayout 事件属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_onLayout(event)&#123;</span><br><span class="line">    let &#123;x,y,width,height&#125; &#x3D; e.nativeEvent.layout</span><br><span class="line">&#125;</span><br><span class="line">....</span><br><span class="line">&lt;View onLayout&#x3D;&#123;(e) &#x3D;&gt; this._onLayout&#125;&gt;&lt;&#x2F;View&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_onLayout(event)&#123;</span><br><span class="line">    let &#123;x,y,width,height&#125; = e.nativeEvent.layout</span><br><span class="line">&#125;</span><br><span class="line">....</span><br><span class="line">&lt;View onLayout=&#123;(e) =&gt; this._onLayout&#125;&gt;&lt;/View&gt;</span><br></pre></td></tr></table></figure>
 <p>当组件重新渲染时，该方法就能重新获取到元素的宽高和位置信息。</p>
 <h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><p>元素自带的 measure 方法</p>
 <p>首先给元素添加上 ref</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;View ref&#x3D;&#123;(view) &#x3D;&gt; this.myView &#x3D; view&#125;&gt;&lt;&#x2F;View&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;View ref=&#123;(view) =&gt; this.myView = view&#125;&gt;&lt;/View&gt;</span><br></pre></td></tr></table></figure>
 <p>然后在需要的地方使用下面代码来获取</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.myView.measure((x,y,width,height,left,top) &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F;todo</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.myView.measure((x,y,width,height,left,top) =&gt; &#123;</span><br><span class="line">    //todo</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>但是如果想在 componentDidMount 方法里面获取的话，需要添加一个定时器，在定时器里面去测量，可能是此时组件还没有完全渲染完成。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount()&#123;</span><br><span class="line">    setTimeOut(() &#x3D;&gt; &#123;</span><br><span class="line">      this.myView.measure((x,y,width,height,left,top) &#x3D;&gt; &#123;</span><br><span class="line">        &#x2F;&#x2F;todo</span><br><span class="line">      &#125;)</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount()&#123;</span><br><span class="line">    setTimeOut(() =&gt; &#123;</span><br><span class="line">      this.myView.measure((x,y,width,height,left,top) =&gt; &#123;</span><br><span class="line">        //todo</span><br><span class="line">      &#125;)</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>实际使用过程中我发现这个方法在自定义的组件上会失效，只能应用在 React Native 自带的 View 等组件上，使用时需要注意一下。</p>
 <h4 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h4><p>使用 UIManager measure 方法</p>
 <p>引入 UIManager</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">    UIManager,</span><br><span class="line">    findNodeHandle</span><br><span class="line">&#125; from &#39;react-native&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">    UIManager,</span><br><span class="line">    findNodeHandle</span><br><span class="line">&#125; from &apos;react-native&apos;;</span><br></pre></td></tr></table></figure>
 <p>其次一样给组件添加上 ref</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent  ref&#x3D;&#123;(ref)&#x3D;&gt;this.myComponent&#x3D;ref&#125; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent  ref=&#123;(ref)=&gt;this.myComponent=ref&#125; /&gt;</span><br></pre></td></tr></table></figure>
 <p>最后在需要的地方去测量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIManager.measure(findNodeHandle(this.myComponent),(x,y,width,height,pageX,pageY)&#x3D;&gt;&#123;</span><br><span class="line">   &#x2F;&#x2F;todo</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIManager.measure(findNodeHandle(this.myComponent),(x,y,width,height,pageX,pageY)=&gt;&#123;</span><br><span class="line">   //todo</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>之前习惯了其他语言可以直接获取控件的大小和位置，现在突然发现 React Native 在这方面操作起来还是蛮复杂的，不过知道了对应的获取方法就没问题了。</p>
 
       
@@ -516,7 +516,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

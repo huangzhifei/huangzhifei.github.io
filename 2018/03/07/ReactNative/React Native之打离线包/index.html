@@ -81,19 +81,19 @@
 
 
 
-<meta name="description" content="打包命令离线包就是把 ReactNative 和你写的 js 文件、图片等资源都打包放入 App ，不需要走网络下载。 使用 react-native bundle –help 来查看打包的具体参数，下面就不列出来了，只挑一些重要的讲解一下：我们以 iOS 为例子 123456789101112--entry-file , ios 或者 android 入口的 js 名称，比如 index.ios">
+<meta name="description" content="打包命令离线包就是把 ReactNative 和你写的 js 文件、图片等资源都打包放入 App ，不需要走网络下载。 使用 react-native bundle –help 来查看打包的具体参数，下面就不列出来了，只挑一些重要的讲解一下：我们以 iOS 为例子 12345678910--entry-file , ios 或者 android 入口的 js 名称，比如 index.ios.js-">
 <meta name="keywords" content="RN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Native之打离线包">
 <meta property="og:url" content="https://huangzhifei.github.io/2018/03/07/ReactNative/React Native之打离线包/index.html">
 <meta property="og:site_name" content="EricHuang&#39;s blog">
-<meta property="og:description" content="打包命令离线包就是把 ReactNative 和你写的 js 文件、图片等资源都打包放入 App ，不需要走网络下载。 使用 react-native bundle –help 来查看打包的具体参数，下面就不列出来了，只挑一些重要的讲解一下：我们以 iOS 为例子 123456789101112--entry-file , ios 或者 android 入口的 js 名称，比如 index.ios">
+<meta property="og:description" content="打包命令离线包就是把 ReactNative 和你写的 js 文件、图片等资源都打包放入 App ，不需要走网络下载。 使用 react-native bundle –help 来查看打包的具体参数，下面就不列出来了，只挑一些重要的讲解一下：我们以 iOS 为例子 12345678910--entry-file , ios 或者 android 入口的 js 名称，比如 index.ios.js-">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RN-Re.png">
 <meta property="og:updated_time" content="2020-01-05T02:55:03.375Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Native之打离线包">
-<meta name="twitter:description" content="打包命令离线包就是把 ReactNative 和你写的 js 文件、图片等资源都打包放入 App ，不需要走网络下载。 使用 react-native bundle –help 来查看打包的具体参数，下面就不列出来了，只挑一些重要的讲解一下：我们以 iOS 为例子 123456789101112--entry-file , ios 或者 android 入口的 js 名称，比如 index.ios">
+<meta name="twitter:description" content="打包命令离线包就是把 ReactNative 和你写的 js 文件、图片等资源都打包放入 App ，不需要走网络下载。 使用 react-native bundle –help 来查看打包的具体参数，下面就不列出来了，只挑一些重要的讲解一下：我们以 iOS 为例子 12345678910--entry-file , ios 或者 android 入口的 js 名称，比如 index.ios.js-">
 <meta name="twitter:image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/RN-Re.png">
 
 
@@ -368,20 +368,20 @@
       
         <h2 id="打包命令"><a href="#打包命令" class="headerlink" title="打包命令"></a>打包命令</h2><p>离线包就是把 ReactNative 和你写的 js 文件、图片等资源都打包放入 App ，不需要走网络下载。</p>
 <p>使用 react-native bundle –help 来查看打包的具体参数，下面就不列出来了，只挑一些重要的讲解一下：<br>我们以 iOS 为例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">--entry-file , ios 或者 android 入口的 js 名称，比如 index.ios.js</span><br><span class="line"></span><br><span class="line">--platform , 平台名称( ios 或者 android )</span><br><span class="line"></span><br><span class="line">--dev , 设置为 false 的时候将会对 JavaScript 代码进行优化处理</span><br><span class="line"></span><br><span class="line">--bundle-output , 生成的 jsbundle 文件的名称，比如 .&#x2F;ios&#x2F;bundle&#x2F;index.ios.jsbundle</span><br><span class="line"></span><br><span class="line">--assets-dest , 图片以及其他资源存放的目录,比如 .&#x2F;ios&#x2F;bundle</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">--entry-file , ios 或者 android 入口的 js 名称，比如 index.ios.js</span><br><span class="line"></span><br><span class="line">--platform , 平台名称( ios 或者 android )</span><br><span class="line"></span><br><span class="line">--dev , 设置为 false 的时候将会对 JavaScript 代码进行优化处理</span><br><span class="line"></span><br><span class="line">--bundle-output , 生成的 jsbundle 文件的名称，比如 ./ios/bundle/index.ios.jsbundle</span><br><span class="line"></span><br><span class="line">--assets-dest , 图片以及其他资源存放的目录,比如 ./ios/bundle</span><br></pre></td></tr></table></figure>
 <p><strong><em>–entry-file 的入口 index.ios.js 在高版本0.48之后已经统一变成 index.js 了，所以命令要改一下。</em></strong></p>
 <p>打包命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">react-native bundle --entry-file index.js --platform ios --dev false --bundle-output .&#x2F;ios&#x2F;bundle&#x2F;index.jsbundle --assets-dest .&#x2F;ios&#x2F;bundle</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ./ios/bundle/index.jsbundle --assets-dest ./ios/bundle</span><br></pre></td></tr></table></figure>
 <p>为了方便使用，也可以把打包命令写到 npm script 中:</p>
 <p>package.json 文件里面</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">		&quot;start&quot;: &quot;node node_modules&#x2F;react-native&#x2F;local-cli&#x2F;cli.js start&quot;,</span><br><span class="line">		&quot;test&quot;: &quot;jest&quot;,</span><br><span class="line">		&quot;bundle-ios&quot;: &quot;node node_modules&#x2F;react-native&#x2F;local-cli&#x2F;cli.js bundle --entry-file index.js  --platform ios --dev false --bundle-output .&#x2F;ios&#x2F;bundle&#x2F;index.jsbundle --assets-dest .&#x2F;ios&#x2F;bundle&quot;</span><br><span class="line">	&#125;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">		&quot;start&quot;: &quot;node node_modules/react-native/local-cli/cli.js start&quot;,</span><br><span class="line">		&quot;test&quot;: &quot;jest&quot;,</span><br><span class="line">		&quot;bundle-ios&quot;: &quot;node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js  --platform ios --dev false --bundle-output ./ios/bundle/index.jsbundle --assets-dest ./ios/bundle&quot;</span><br><span class="line">	&#125;,</span><br></pre></td></tr></table></figure>
 <p>这样以后只要运行如下命令就可以了</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run bundle-ios</span><br></pre></td></tr></table></figure>
 <p>打包成功后会在相应的目录下看到离线包!</p>
 <h2 id="添加资源"><a href="#添加资源" class="headerlink" title="添加资源"></a>添加资源</h2><p>离线包生成完成之后，可以在相应的目录下看到一个 <strong>bundle</strong> 目录，这个目录就是生成的整个离线资源，我们需要在 Xcode 中添加此资源，直接拖进来，但是记住要选择 Create folder references 的方式添加文件夹。</p>
 <p>如何检验是否添加的方式正确，看他是不是蓝色的文件夹。</p>
 <p>在 iOS 中就可以设置加载 JS 的代码了，记住这个时候 jsCodeLocation 就不用以 localhost 那种方式加载了，使用下面的方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsCodeLocation &#x3D; [[NSBundle mainBundle] URLForResource:@&quot;bundle&#x2F;index.ios&quot; withExtension:@&quot;jsbundle&quot;];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsCodeLocation = [[NSBundle mainBundle] URLForResource:@&quot;bundle/index.ios&quot; withExtension:@&quot;jsbundle&quot;];</span><br></pre></td></tr></table></figure>
 <p>离线包里的 .jsbundle 文件是经过优化处理的，因此运行效率也会比 Debug 的时候更高一些.</p>
 <p>模拟器或真机运行，一切正常就ok了，因为不需要我们在提前开启一个服务。</p>
 <h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><p>1、离线包如果开启了chrome调试，会访问调试服务器，而且会一直loading出不来。</p>
@@ -521,7 +521,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

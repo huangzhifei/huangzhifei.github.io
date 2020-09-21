@@ -364,7 +364,7 @@
       
 
       
-        <p>先上链接地址 <a href="https://github.com/MortimerGoro/MGSwipeTableCell">MGSwipeTableCell</a></p>
+        <p>先上链接地址 <a href="https://github.com/MortimerGoro/MGSwipeTableCell" target="_blank" rel="noopener">MGSwipeTableCell</a></p>
 <p>感动的是至今作者还在维护这个项目，iOS 5出来的，虽然 iOS 8出了新的API，可以增加自定义右边滑出的菜单，但是他依然不支持左边出菜单以及 iOS7。（理由够强烈了吧）</p>
 <p>这篇文章不讲使用方法，作者在 README 里面说的很详细。初读了代码，想看看是怎么个实现思路（好奇宝宝），发现这个库写的很好，很强大（虽然代码格式不怎么规范，虽然有一个地方在方法名后面直接多打了分号，但是不影响，not care）</p>
 <p><strong>实现思路</strong></p>
@@ -377,7 +377,7 @@
 <h5 id="a、创建-cell-的截图"><a href="#a、创建-cell-的截图" class="headerlink" title="a、创建 cell 的截图"></a>a、创建 cell 的截图</h5><p>这里有个小优化，截图里面并不包含分割线（分割线根着滑很奇怪），怎么才能完美截出不带分割线的图了，我们可以使用 cell 的宽，但是使用 cell.contentView.height。</p>
 <h5 id="b、隐藏-cell-上面-contentView-下的所有子-view"><a href="#b、隐藏-cell-上面-contentView-下的所有子-view" class="headerlink" title="b、隐藏 cell 上面 contentView 下的所有子 view"></a>b、隐藏 cell 上面 contentView 下的所有子 view</h5><h5 id="c、添加刚才的截图"><a href="#c、添加刚才的截图" class="headerlink" title="c、添加刚才的截图"></a>c、添加刚才的截图</h5><h5 id="d、动画"><a href="#d、动画" class="headerlink" title="d、动画"></a>d、动画</h5><p>这里的动画，假设我们只取最简单的从左到右，从右到左，作者使用了 CADisplayLink 去算移动的偏移量，然后使用 CGAffineTransformMakeTranslation(tx, ty) 去做移动动画，<strong>这里是不是也给了大家思路去实现自己的动画</strong>，基本上自定义动画都是需要使用 CADisplayLink 在配置系统提供的 C 的仿射变化接口去实现。</p>
 <h3 id="6、收起菜单后，显示-contentView-下的所有子-view"><a href="#6、收起菜单后，显示-contentView-下的所有子-view" class="headerlink" title="6、收起菜单后，显示 contentView 下的所有子 view"></a>6、收起菜单后，显示 contentView 下的所有子 view</h3><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>源码里面有很多细节，很值得仔细分析与学习。</p>
-<h3 id="自己如何简单实现"><a href="#自己如何简单实现" class="headerlink" title="自己如何简单实现"></a>自己如何简单实现</h3><p><a href="http://www.aizhuanji.com/a/7w2dJdJW.html">看后面部分内容</a></p>
+<h3 id="自己如何简单实现"><a href="#自己如何简单实现" class="headerlink" title="自己如何简单实现"></a>自己如何简单实现</h3><p><a href="http://www.aizhuanji.com/a/7w2dJdJW.html" target="_blank" rel="noopener">看后面部分内容</a></p>
 <p>一句话总结就是在你的 view 下面放一个含有左右要出现的菜单，然后上面放你实际的内容盖住，增加手势，左右滑动调整约束来展示。</p>
 
       
@@ -510,7 +510,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

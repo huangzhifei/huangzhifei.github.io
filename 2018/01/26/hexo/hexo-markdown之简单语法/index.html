@@ -376,17 +376,17 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*斜体*</span><br><span class="line">**粗体**</span><br></pre></td></tr></table></figure>
 <p>渲染效果：这是 <em>斜体</em>，这是 <strong>粗体</strong></p>
 <h2 id="分级标题"><a href="#分级标题" class="headerlink" title="分级标题"></a>分级标题</h2><p>使用 === 表示一级标题， 使用 — 表示二级标题，最少需要一个符号（=和-）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">这是一级标题</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">这是二级标题</span><br><span class="line">----------</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">这是一级标题</span><br><span class="line">==========</span><br><span class="line"></span><br><span class="line">这是二级标题</span><br><span class="line">----------</span><br></pre></td></tr></table></figure>
 <p>但是我们还是习惯方便使用下 # 号来表示不同级别的标题（H1-H6），格式如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># H1</span><br><span class="line">## H2</span><br><span class="line">### H3</span><br><span class="line">#### H4</span><br><span class="line">##### H5</span><br><span class="line">###### H6</span><br></pre></td></tr></table></figure>
 <h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><p>在单独的一行使用 *** 或者 — 就能表示分割线了，记住一定要单独一行，不然就变成二级标题了。</p>
 <h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><p>使用 ~~包裹 表示删除线</p>
 <h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><a href="链接地址">链接描述</a></p>
-<p>例如：<a href="https://www.baidu.com">百度</a></p>
+<p>例如：<a href="https://www.baidu.com" target="_blank" rel="noopener">百度</a></p>
 <h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p><img src="图片地址" alt="图片描述"></p>
 <p>例如：<br><img src="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/snow.jpeg" alt="雪景"></p>
 <h2 id="视频"><a href="#视频" class="headerlink" title="视频"></a>视频</h2><p>添加外部视频的话，要使用 iframe 代码，并且还需要对应的视频网站支持，问题的关键是我们如何知道对应的视频链接，下面介绍个不错的方法，通过在视频分享键附近寻找把视频分享给朋友的地址，然后就可以使用下面的模板代码插入了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe width&#x3D;&quot;640&quot; height&#x3D;&quot;360&quot; src&#x3D;&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;HfElOZSEqn4&quot; frameborder&#x3D;&quot;0&quot; allowfullscreen&gt;</span><br><span class="line">&lt;&#x2F;iframe&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe width=&quot;640&quot; height=&quot;360&quot; src=&quot;https://www.youtube.com/embed/HfElOZSEqn4&quot; frameborder=&quot;0&quot; allowfullscreen&gt;</span><br><span class="line">&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
 <p>例如：</p>
 <iframe width="640" height="360" src="https://www.youtube.com/embed/HfElOZSEqn4" frameborder="0" allowfullscreen><br></iframe>
 
@@ -431,7 +431,8 @@
 </tbody>
 </table>
 <h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>使用 点点点 包裹起来，或者直接用 tab 也行，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; &#96;&#96;&#96;</span><br><span class="line">&#x2F;&#x2F; some codes</span><br><span class="line">&#x2F;&#x2F; &#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">if (1) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//</span><br></pre></td></tr></table></figure>
+<p>// some codes<br>// <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">if (1) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -563,7 +564,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

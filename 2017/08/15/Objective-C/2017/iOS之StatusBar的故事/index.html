@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="隐藏与显示在 iOS7.0 以前我们都知道设置 status bar 显示与隐藏使用下面的代码 123[UIApplication sharedApplication].statusBarHidden &amp;#x3D; YES;或者通过[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES] iOS7.0">
+<meta name="description" content="隐藏与显示在 iOS7.0 以前我们都知道设置 status bar 显示与隐藏使用下面的代码 123[UIApplication sharedApplication].statusBarHidden = YES;或者通过[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES] iOS7.0 之后，这两">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS之StatusBar的故事">
 <meta property="og:url" content="https://huangzhifei.github.io/2017/08/15/Objective-C/2017/iOS之StatusBar的故事/index.html">
 <meta property="og:site_name" content="EricHuang&#39;s blog">
-<meta property="og:description" content="隐藏与显示在 iOS7.0 以前我们都知道设置 status bar 显示与隐藏使用下面的代码 123[UIApplication sharedApplication].statusBarHidden &amp;#x3D; YES;或者通过[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES] iOS7.0">
+<meta property="og:description" content="隐藏与显示在 iOS7.0 以前我们都知道设置 status bar 显示与隐藏使用下面的代码 123[UIApplication sharedApplication].statusBarHidden = YES;或者通过[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES] iOS7.0 之后，这两">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-01-05T02:55:03.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS之StatusBar的故事">
-<meta name="twitter:description" content="隐藏与显示在 iOS7.0 以前我们都知道设置 status bar 显示与隐藏使用下面的代码 123[UIApplication sharedApplication].statusBarHidden &amp;#x3D; YES;或者通过[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES] iOS7.0">
+<meta name="twitter:description" content="隐藏与显示在 iOS7.0 以前我们都知道设置 status bar 显示与隐藏使用下面的代码 123[UIApplication sharedApplication].statusBarHidden = YES;或者通过[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES] iOS7.0 之后，这两">
 
 
 
@@ -365,16 +365,16 @@
 
       
         <h3 id="隐藏与显示"><a href="#隐藏与显示" class="headerlink" title="隐藏与显示"></a>隐藏与显示</h3><p>在 iOS7.0 以前我们都知道设置 status bar 显示与隐藏使用下面的代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[UIApplication sharedApplication].statusBarHidden &#x3D; YES;</span><br><span class="line">或者通过</span><br><span class="line">[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[UIApplication sharedApplication].statusBarHidden = YES;</span><br><span class="line">或者通过</span><br><span class="line">[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES]</span><br></pre></td></tr></table></figure>
 <p>iOS7.0 之后，这两个全局的方法不好用，本身这种全局方法在使用的时候就比较坑，因为可能只是某几个页面需要更改样式，改完后在页面切换的时候还要还原，但是如果使用下面提供的新的方法，就只会在当前页面有效果，系统会帮我们还原，并且效果会比我们自己控制的还原要好</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)prefersStatusBarHidden &#123;</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>每个 UIViewController 里面都有这个方法，我们只要在想要更换 status bar 显示与隐藏的页面重写这个方法就好了。</p>
 <p>假设我们的应用中所有的界面都需要隐藏状态栏怎么办？可以在工程中的Info.plist文件中进行设置:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;UIViewControllerBasedStatusBarAppearance&lt;&#x2F;key&gt;</span><br><span class="line">&lt;false&#x2F;&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;UIViewControllerBasedStatusBarAppearance&lt;/key&gt;</span><br><span class="line">&lt;false/&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h3><p>道理和上面的基本一样，使用新的实现方法</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (UIStatusBarStyle)preferredStatusBarStyle &#123;</span><br><span class="line">    return UIStatusBarStyleLightContent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果是全局，也是就在 info.plist 里面添加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;UIStatusBarStyle&lt;&#x2F;key&gt;</span><br><span class="line">&lt;string&gt;UIStatusBarStyleDefault&lt;&#x2F;string&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;UIStatusBarStyle&lt;/key&gt;</span><br><span class="line">&lt;string&gt;UIStatusBarStyleDefault&lt;/string&gt;</span><br></pre></td></tr></table></figure>
 <p>值可以选择。</p>
 
       
@@ -507,7 +507,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

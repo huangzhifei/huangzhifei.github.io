@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="1、非编辑模式123self.tableView.allowsSelection &amp;#x3D; YES; &amp;#x2F;&amp;#x2F; default 单选&amp;#x2F;&amp;#x2F;或self.tableView.allowsSelectionDuringEditing &amp;#x3D; YES; &amp;#x2F;&amp;#x2F; 多选 2、编辑模式123self.tableView.allowsSelection">
+<meta name="description" content="1、非编辑模式123self.tableView.allowsSelection = YES; // default 单选//或self.tableView.allowsSelectionDuringEditing = YES; // 多选 2、编辑模式123self.tableView.allowsSelectionDuringEditing = YES; // 编辑模式下单选//或self.t">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS之UITableView的单选与多选">
 <meta property="og:url" content="https://huangzhifei.github.io/2017/04/15/Objective-C/2017/iOS之UITableView的单选与多选/index.html">
 <meta property="og:site_name" content="EricHuang&#39;s blog">
-<meta property="og:description" content="1、非编辑模式123self.tableView.allowsSelection &amp;#x3D; YES; &amp;#x2F;&amp;#x2F; default 单选&amp;#x2F;&amp;#x2F;或self.tableView.allowsSelectionDuringEditing &amp;#x3D; YES; &amp;#x2F;&amp;#x2F; 多选 2、编辑模式123self.tableView.allowsSelection">
+<meta property="og:description" content="1、非编辑模式123self.tableView.allowsSelection = YES; // default 单选//或self.tableView.allowsSelectionDuringEditing = YES; // 多选 2、编辑模式123self.tableView.allowsSelectionDuringEditing = YES; // 编辑模式下单选//或self.t">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-01-05T02:55:03.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS之UITableView的单选与多选">
-<meta name="twitter:description" content="1、非编辑模式123self.tableView.allowsSelection &amp;#x3D; YES; &amp;#x2F;&amp;#x2F; default 单选&amp;#x2F;&amp;#x2F;或self.tableView.allowsSelectionDuringEditing &amp;#x3D; YES; &amp;#x2F;&amp;#x2F; 多选 2、编辑模式123self.tableView.allowsSelection">
+<meta name="twitter:description" content="1、非编辑模式123self.tableView.allowsSelection = YES; // default 单选//或self.tableView.allowsSelectionDuringEditing = YES; // 多选 2、编辑模式123self.tableView.allowsSelectionDuringEditing = YES; // 编辑模式下单选//或self.t">
 
 
 
@@ -364,8 +364,8 @@
       
 
       
-        <h4 id="1、非编辑模式"><a href="#1、非编辑模式" class="headerlink" title="1、非编辑模式"></a>1、非编辑模式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.tableView.allowsSelection &#x3D; YES; &#x2F;&#x2F; default 单选</span><br><span class="line">&#x2F;&#x2F;或</span><br><span class="line">self.tableView.allowsSelectionDuringEditing &#x3D; YES; &#x2F;&#x2F; 多选</span><br></pre></td></tr></table></figure>
-<h4 id="2、编辑模式"><a href="#2、编辑模式" class="headerlink" title="2、编辑模式"></a>2、编辑模式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.tableView.allowsSelectionDuringEditing &#x3D; YES; &#x2F;&#x2F; 编辑模式下单选</span><br><span class="line">&#x2F;&#x2F;或</span><br><span class="line">self.tableView.allowsMultipleSelectionDuringEditing &#x3D; YES; &#x2F;&#x2F;  编辑模式下多选</span><br></pre></td></tr></table></figure>
+        <h4 id="1、非编辑模式"><a href="#1、非编辑模式" class="headerlink" title="1、非编辑模式"></a>1、非编辑模式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.tableView.allowsSelection = YES; // default 单选</span><br><span class="line">//或</span><br><span class="line">self.tableView.allowsSelectionDuringEditing = YES; // 多选</span><br></pre></td></tr></table></figure>
+<h4 id="2、编辑模式"><a href="#2、编辑模式" class="headerlink" title="2、编辑模式"></a>2、编辑模式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.tableView.allowsSelectionDuringEditing = YES; // 编辑模式下单选</span><br><span class="line">//或</span><br><span class="line">self.tableView.allowsMultipleSelectionDuringEditing = YES; //  编辑模式下多选</span><br></pre></td></tr></table></figure>
 <p>但是坑点在：如果你设置了这个 cell 的选择样式为 none</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[cell setSelectionStyle:UITableViewCellSelectionStyleNone];</span><br></pre></td></tr></table></figure>
 <p>你就始终无法选择上那行 cell</p>
@@ -500,7 +500,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

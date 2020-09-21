@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="方法一在iOS 7后新增了下面这两个属性 1234self.edgesForExtendedLayout&amp;#x3D;UIRectEdgeNone;self.automaticallyAdjustsScrollViewInsets&amp;#x3D;NO; 只要设置了 self.edgesForExtendedLayout = UIRectEdgeAll（默认）后就会让布局从状态栏开始，而不是从导航栏下面开">
+<meta name="description" content="方法一在iOS 7后新增了下面这两个属性 123self.edgesForExtendedLayout=UIRectEdgeNone;self.automaticallyAdjustsScrollViewInsets=NO; 只要设置了 self.edgesForExtendedLayout = UIRectEdgeAll（默认）后就会让布局从状态栏开始，而不是从导航栏下面开始。 所以要使用上面的">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS之edgesForExtendedLayout属性">
 <meta property="og:url" content="https://huangzhifei.github.io/2015/01/10/Objective-C/2015/iOS之edgesForExtendedLayout属性/index.html">
 <meta property="og:site_name" content="EricHuang&#39;s blog">
-<meta property="og:description" content="方法一在iOS 7后新增了下面这两个属性 1234self.edgesForExtendedLayout&amp;#x3D;UIRectEdgeNone;self.automaticallyAdjustsScrollViewInsets&amp;#x3D;NO; 只要设置了 self.edgesForExtendedLayout = UIRectEdgeAll（默认）后就会让布局从状态栏开始，而不是从导航栏下面开">
+<meta property="og:description" content="方法一在iOS 7后新增了下面这两个属性 123self.edgesForExtendedLayout=UIRectEdgeNone;self.automaticallyAdjustsScrollViewInsets=NO; 只要设置了 self.edgesForExtendedLayout = UIRectEdgeAll（默认）后就会让布局从状态栏开始，而不是从导航栏下面开始。 所以要使用上面的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-01-05T02:55:03.362Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS之edgesForExtendedLayout属性">
-<meta name="twitter:description" content="方法一在iOS 7后新增了下面这两个属性 1234self.edgesForExtendedLayout&amp;#x3D;UIRectEdgeNone;self.automaticallyAdjustsScrollViewInsets&amp;#x3D;NO; 只要设置了 self.edgesForExtendedLayout = UIRectEdgeAll（默认）后就会让布局从状态栏开始，而不是从导航栏下面开">
+<meta name="twitter:description" content="方法一在iOS 7后新增了下面这两个属性 123self.edgesForExtendedLayout=UIRectEdgeNone;self.automaticallyAdjustsScrollViewInsets=NO; 只要设置了 self.edgesForExtendedLayout = UIRectEdgeAll（默认）后就会让布局从状态栏开始，而不是从导航栏下面开始。 所以要使用上面的">
 
 
 
@@ -365,12 +365,12 @@
 
       
         <h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>在iOS 7后新增了下面这两个属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">self.edgesForExtendedLayout&#x3D;UIRectEdgeNone;</span><br><span class="line">self.automaticallyAdjustsScrollViewInsets&#x3D;NO;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">self.edgesForExtendedLayout=UIRectEdgeNone;</span><br><span class="line">self.automaticallyAdjustsScrollViewInsets=NO;</span><br></pre></td></tr></table></figure>
 <p>只要设置了 self.edgesForExtendedLayout = UIRectEdgeAll（默认）后就会让布局从状态栏开始，而不是从导航栏下面开始。</p>
 <p>所以要使用上面的代码来杜绝这种情况。</p>
 <h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p><strong>关闭导航栏半透明</strong></p>
 <p>在iOS 6及之前，translucent默认都是NO，但是在iOS 7开始就默认都是YES了，所以我们要关闭掉，特别是我们给导航栏设置统一的颜色时，如果不关闭半透明，颜色值就永远设置不对，并且会影响两个页面push的动画。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">self.navigationController.navigationBar.translucent &#x3D; NO;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">self.navigationController.navigationBar.translucent = NO;</span><br></pre></td></tr></table></figure>
 <p>将半透明度关闭后，布局也将会从导栏下面开始了。</p>
 <h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>将 view 的布局直接相关顶部设置64（出了iphone X后就不能这样写死，因为他是88），此方法不如上面两种方式简洁，所以不推荐。</p>
 
@@ -504,7 +504,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

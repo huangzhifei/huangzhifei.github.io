@@ -264,6 +264,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2020/09/21/Objective-C/2020/GCD 的 dispatch_group/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EricHuang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/21/Objective-C/2020/GCD 的 dispatch_group/" itemprop="url">GCD 的 dispatch_group</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-21T17:30:48+08:00">
+                2020-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS技术/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/21/Objective-C/2020/GCD 的 dispatch_group/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/09/21/Objective-C/2020/GCD 的 dispatch_group/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          聊聊 GCD 的 dispatch_group一、概述dispatch_group 可以将 GCD 的任务合并到一个组里来管理，也可以同时监听组里所有任务的执行情况。主要的 API 有以下几个,先看一下 Dispatch Group 的具体使用。
+
+dispatch_group_create
+dis
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/09/21/Objective-C/2020/GCD 的 dispatch_group/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2020/09/03/Objective-C/2020/2020状况/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -665,8 +826,8 @@
       
         
           
-          iOS 13 系统禁止通过 KVC 访问1、UITextField12UITextField *textField &#x3D; [UITextField new];[textField valueForKey:@&quot;_placeholderLabel&quot;];
-系统的 UITextF
+          iOS 13 系统禁止通过 KVC 访问1、UITextField12UITextField *textField = [UITextField new];[textField valueForKey:@&quot;_placeholderLabel&quot;];
+系统的 UITextField 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1461,7 +1622,7 @@ Category 方法存在位置实际上，Category 并没有覆盖主类的同名�
       
         
           
-          直接获取系统版本12345678NSString *version &#x3D; [UIDevice currentDevice].systemVersion;if (version.doubleValue &gt;&#x3D; 9.0) &#123;    &#x2F;&#x2F; 针对 9.0 
+          直接获取系统版本1234567NSString *version = [UIDevice currentDevice].systemVersion;if (version.doubleValue &gt;= 9.0) &#123;    // 针对 9.0 以上的iOS系统进行处理&#125; el
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1663,165 +1824,6 @@ RACSubject 到底是什么？根据其字面意思，可以将其理解为一个
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://huangzhifei.github.io/2019/03/18/Objective-C/ReactiveObjc/RACCommand的用法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Eric Huang">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://github.com/huangzhifei/blog-web/raw/master/source/_posts/images/avatar-photo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EricHuang's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/18/Objective-C/ReactiveObjc/RACCommand的用法/" itemprop="url">RACCommand的用法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-18T23:29:54+08:00">
-                2019-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/RAC/" itemprop="url" rel="index">
-                    <span itemprop="name">RAC</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/03/18/Objective-C/ReactiveObjc/RACCommand的用法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/18/Objective-C/ReactiveObjc/RACCommand的用法/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          RACCommandRACCommand 在 ReactiveObjc 中是比较复杂的类，对于大多数人尤其是初学者并不会经常使用他。
-在很多情况下，虽然使用 RACSignal 和 RACSubject 就能解决绝大部分问题，但是 RACCommand 的使用会为我们带来巨大的便利，尤其是在与副作用
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/18/Objective-C/ReactiveObjc/RACCommand的用法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1874,7 +1876,7 @@ RACSubject 到底是什么？根据其字面意思，可以将其理解为一个
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

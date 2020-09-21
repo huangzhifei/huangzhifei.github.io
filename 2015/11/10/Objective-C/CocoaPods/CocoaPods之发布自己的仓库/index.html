@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="网上有一堆这样的教程，下面我只是总结几个关键步骤 1、注册trunka、安装cocoapod1sudo gem install cocoapods b、发送注册请求，如果注册过的就忽略12345pod trunk register email &amp;#39;username&amp;#39; --verbose例子：pod trunk register xxxxx@126.com &amp;#39;xxxxxx&amp;#3">
+<meta name="description" content="网上有一堆这样的教程，下面我只是总结几个关键步骤 1、注册trunka、安装cocoapod1sudo gem install cocoapods b、发送注册请求，如果注册过的就忽略1234pod trunk register email &amp;apos;username&amp;apos; --verbose例子：pod trunk register xxxxx@126.com &amp;apos;xxxxxx&amp;">
 <meta name="keywords" content="CocoaPods">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CocoaPods之发布自己的仓库">
 <meta property="og:url" content="https://huangzhifei.github.io/2015/11/10/Objective-C/CocoaPods/CocoaPods之发布自己的仓库/index.html">
 <meta property="og:site_name" content="EricHuang&#39;s blog">
-<meta property="og:description" content="网上有一堆这样的教程，下面我只是总结几个关键步骤 1、注册trunka、安装cocoapod1sudo gem install cocoapods b、发送注册请求，如果注册过的就忽略12345pod trunk register email &amp;#39;username&amp;#39; --verbose例子：pod trunk register xxxxx@126.com &amp;#39;xxxxxx&amp;#3">
+<meta property="og:description" content="网上有一堆这样的教程，下面我只是总结几个关键步骤 1、注册trunka、安装cocoapod1sudo gem install cocoapods b、发送注册请求，如果注册过的就忽略1234pod trunk register email &amp;apos;username&amp;apos; --verbose例子：pod trunk register xxxxx@126.com &amp;apos;xxxxxx&amp;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-01-05T02:55:03.368Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CocoaPods之发布自己的仓库">
-<meta name="twitter:description" content="网上有一堆这样的教程，下面我只是总结几个关键步骤 1、注册trunka、安装cocoapod1sudo gem install cocoapods b、发送注册请求，如果注册过的就忽略12345pod trunk register email &amp;#39;username&amp;#39; --verbose例子：pod trunk register xxxxx@126.com &amp;#39;xxxxxx&amp;#3">
+<meta name="twitter:description" content="网上有一堆这样的教程，下面我只是总结几个关键步骤 1、注册trunka、安装cocoapod1sudo gem install cocoapods b、发送注册请求，如果注册过的就忽略1234pod trunk register email &amp;apos;username&amp;apos; --verbose例子：pod trunk register xxxxx@126.com &amp;apos;xxxxxx&amp;">
 
 
 
@@ -366,7 +366,7 @@
       
         <p>网上有一堆这样的教程，下面我只是总结几个关键步骤</p>
 <h3 id="1、注册trunk"><a href="#1、注册trunk" class="headerlink" title="1、注册trunk"></a>1、注册trunk</h3><h4 id="a、安装cocoapod"><a href="#a、安装cocoapod" class="headerlink" title="a、安装cocoapod"></a>a、安装cocoapod</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods</span><br></pre></td></tr></table></figure>
-<h4 id="b、发送注册请求，如果注册过的就忽略"><a href="#b、发送注册请求，如果注册过的就忽略" class="headerlink" title="b、发送注册请求，如果注册过的就忽略"></a>b、发送注册请求，如果注册过的就忽略</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pod trunk register email &#39;username&#39; --verbose</span><br><span class="line"></span><br><span class="line">例子：</span><br><span class="line">pod trunk register xxxxx@126.com &#39;xxxxxx&#39; --verbose</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="b、发送注册请求，如果注册过的就忽略"><a href="#b、发送注册请求，如果注册过的就忽略" class="headerlink" title="b、发送注册请求，如果注册过的就忽略"></a>b、发送注册请求，如果注册过的就忽略</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pod trunk register email &apos;username&apos; --verbose</span><br><span class="line"></span><br><span class="line">例子：</span><br><span class="line">pod trunk register xxxxx@126.com &apos;xxxxxx&apos; --verbose</span><br></pre></td></tr></table></figure>
 <p>之后会给对应邮箱发一份邮箱，去邮箱验证一下就行了（基本上会被当成垃圾邮件)</p>
 <h3 id="2、github仓库"><a href="#2、github仓库" class="headerlink" title="2、github仓库"></a>2、github仓库</h3><h4 id="a、上传代码-github-，创建对应版本的tag，然后创建podspec文件"><a href="#a、上传代码-github-，创建对应版本的tag，然后创建podspec文件" class="headerlink" title="a、上传代码 github ，创建对应版本的tag，然后创建podspec文件"></a>a、上传代码 github ，创建对应版本的tag，然后创建podspec文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec create 名字</span><br></pre></td></tr></table></figure>
 <h4 id="b、修改这个podspec文件，偷懒的话可以随便找一个别人的，拿过来更改"><a href="#b、修改这个podspec文件，偷懒的话可以随便找一个别人的，拿过来更改" class="headerlink" title="b、修改这个podspec文件，偷懒的话可以随便找一个别人的，拿过来更改"></a>b、修改这个podspec文件，偷懒的话可以随便找一个别人的，拿过来更改</h4><h4 id="c、上传-podspec-文件到cocoapod的仓库下面"><a href="#c、上传-podspec-文件到cocoapod的仓库下面" class="headerlink" title="c、上传 podspec 文件到cocoapod的仓库下面"></a>c、上传 podspec 文件到cocoapod的仓库下面</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push Project_name.podspec --allow-warnings --verbose</span><br></pre></td></tr></table></figure>
@@ -506,7 +506,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
